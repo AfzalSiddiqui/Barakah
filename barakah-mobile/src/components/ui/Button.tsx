@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, TouchableOpacityProps, ActivityIndicator } from 'react-native';
-import { Typography } from './Typography';
+import { useFluxColors, FluxSpacing, FluxRadius, FluxOpacity } from '@anthropic-flux/react-native-ds';
+import { FluxText } from '@anthropic-flux/react-native-foundation';
 
 type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
 type ButtonSize = 'sm' | 'md' | 'lg';
@@ -12,20 +13,6 @@ interface ButtonProps extends TouchableOpacityProps {
   loading?: boolean;
   icon?: React.ReactNode;
 }
-
-const variantClasses: Record<ButtonVariant, string> = {
-  primary: 'bg-nb-green',
-  secondary: 'bg-nb-card',
-  outline: 'border border-nb-green bg-transparent',
-  ghost: 'bg-transparent',
-};
-
-const variantTextClasses: Record<ButtonVariant, string> = {
-  primary: 'text-nb-dark',
-  secondary: 'text-nb-text',
-  outline: 'text-nb-green',
-  ghost: 'text-nb-green',
-};
 
 const sizeClasses: Record<ButtonSize, string> = {
   sm: 'px-4 py-2 rounded-lg',
@@ -43,10 +30,26 @@ export function Button({
   className,
   ...props
 }: ButtonProps) {
+  const colors = useFluxColors();
+
+  const variantBgClasses: Record<ButtonVariant, string> = {
+    primary: 'bg-nb-green',
+    secondary: 'bg-nb-card',
+    outline: 'border border-nb-green bg-transparent',
+    ghost: 'bg-transparent',
+  };
+
+  const variantTextColor: Record<ButtonVariant, string> = {
+    primary: colors.onPrimary,
+    secondary: colors.textPrimary,
+    outline: colors.primary,
+    ghost: colors.primary,
+  };
+
   return (
     <TouchableOpacity
-      className={`flex-row items-center justify-center ${variantClasses[variant]} ${sizeClasses[size]} ${
-        disabled ? 'opacity-50' : ''
+      className={`flex-row items-center justify-center ${variantBgClasses[variant]} ${sizeClasses[size]} ${
+        disabled ? `opacity-${Math.round(FluxOpacity.disabled * 100)}` : ''
       } ${className ?? ''}`}
       disabled={disabled || loading}
       activeOpacity={0.7}
@@ -54,18 +57,19 @@ export function Button({
     >
       {loading ? (
         <ActivityIndicator
-          color={variant === 'primary' ? '#0A0E17' : '#00D4AA'}
+          color={variant === 'primary' ? colors.onPrimary : colors.primary}
           size="small"
         />
       ) : (
         <>
           {icon}
-          <Typography
-            variant={size === 'sm' ? 'captionBold' : 'bodyBold'}
-            className={`${variantTextClasses[variant]} ${icon ? 'ml-2' : ''}`}
+          <FluxText
+            textStyle={size === 'sm' ? 'caption' : 'footnote'}
+            color={variantTextColor[variant]}
+            style={icon ? { marginLeft: FluxSpacing.xs } : undefined}
           >
             {label}
-          </Typography>
+          </FluxText>
         </>
       )}
     </TouchableOpacity>

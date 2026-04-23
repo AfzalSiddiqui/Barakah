@@ -4,11 +4,14 @@
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web"
   },
   "dependencies": {
+    "@anthropic-flux/react-native-assets": "github:AfzalSiddiqui/flux-react-native-assets",
+    "@anthropic-flux/react-native-ds": "github:AfzalSiddiqui/flux-react-native-ds",
+    "@anthropic-flux/react-native-foundation": "github:AfzalSiddiqui/flux-react-native-foundation",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-native-community/slider": "^5.0.1",
     "babel-preset-expo": "^55.0.18",

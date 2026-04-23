@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, TextProps } from 'react-native';
+import { Text, TextProps, TextStyle } from 'react-native';
+import { useFluxColors, FluxTypography } from '@anthropic-flux/react-native-ds';
 
 type Variant = 'h1' | 'h2' | 'h3' | 'body' | 'bodyBold' | 'caption' | 'captionBold' | 'small' | 'smallBold';
 
@@ -8,27 +9,32 @@ interface TypographyProps extends TextProps {
   color?: string;
 }
 
-const variantClasses: Record<Variant, string> = {
-  h1: 'text-[26px] font-bold leading-8',
-  h2: 'text-[20px] font-bold leading-7',
-  h3: 'text-[17px] font-semibold leading-6',
-  body: 'text-[14px] font-normal leading-5',
-  bodyBold: 'text-[14px] font-semibold leading-5',
-  caption: 'text-[12px] font-normal leading-4',
-  captionBold: 'text-[12px] font-semibold leading-4',
-  small: 'text-[10px] font-normal leading-3',
-  smallBold: 'text-[10px] font-semibold leading-3',
+const variantStyles: Record<Variant, TextStyle> = {
+  h1: { fontSize: 26, fontWeight: '700', lineHeight: 32 },
+  h2: { fontSize: 20, fontWeight: '700', lineHeight: 28 },
+  h3: FluxTypography.headline,
+  body: { fontSize: 14, fontWeight: '400', lineHeight: 20 },
+  bodyBold: { fontSize: 14, fontWeight: '600', lineHeight: 20 },
+  caption: FluxTypography.caption,
+  captionBold: { ...FluxTypography.caption, fontWeight: '600' },
+  small: { fontSize: 10, fontWeight: '400', lineHeight: 14 },
+  smallBold: { fontSize: 10, fontWeight: '600', lineHeight: 14 },
 };
 
 export function Typography({
   variant = 'body',
+  color,
   className,
+  style,
   children,
   ...props
 }: TypographyProps) {
+  const colors = useFluxColors();
+
   return (
     <Text
-      className={`text-nb-text ${variantClasses[variant]} ${className ?? ''}`}
+      className={`text-nb-text ${className ?? ''}`}
+      style={[variantStyles[variant], color ? { color } : { color: colors.textPrimary }, style]}
       {...props}
     >
       {children}

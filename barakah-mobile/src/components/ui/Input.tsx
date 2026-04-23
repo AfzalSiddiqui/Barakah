@@ -1,31 +1,52 @@
 import React from 'react';
 import { TextInput, TextInputProps, View } from 'react-native';
-import { Typography } from './Typography';
+import { useFluxColors, FluxSpacing, FluxRadius, FluxBorder } from '@anthropic-flux/react-native-ds';
+import { FluxText } from '@anthropic-flux/react-native-foundation';
 
 interface InputProps extends TextInputProps {
   label?: string;
   error?: string;
 }
 
-export function Input({ label, error, className, ...props }: InputProps) {
+export function Input({ label, error, className, style, ...props }: InputProps) {
+  const colors = useFluxColors();
+
   return (
     <View className={className}>
       {label && (
-        <Typography variant="captionBold" className="text-nb-muted mb-2">
+        <FluxText
+          textStyle="caption"
+          color={colors.textSecondary}
+          style={{ marginBottom: FluxSpacing.xs, fontWeight: '600' }}
+        >
           {label}
-        </Typography>
+        </FluxText>
       )}
       <TextInput
-        className={`bg-nb-surface text-nb-text text-[13px] px-3 py-2.5 rounded-xl border ${
-          error ? 'border-nb-red' : 'border-nb-card'
-        }`}
-        placeholderTextColor="#6B7B8D"
+        style={[
+          {
+            backgroundColor: colors.surface,
+            color: colors.textPrimary,
+            fontSize: 13,
+            paddingHorizontal: FluxSpacing.sm,
+            paddingVertical: 10,
+            borderRadius: FluxRadius.md,
+            borderWidth: FluxBorder.thin,
+            borderColor: error ? colors.error : colors.border,
+          },
+          style,
+        ]}
+        placeholderTextColor={colors.textSecondary}
         {...props}
       />
       {error && (
-        <Typography variant="small" className="text-nb-red mt-1">
+        <FluxText
+          textStyle="caption"
+          color={colors.error}
+          style={{ marginTop: FluxSpacing.xxs }}
+        >
           {error}
-        </Typography>
+        </FluxText>
       )}
     </View>
   );

@@ -1,16 +1,28 @@
 import React from 'react';
 import { View, ViewProps } from 'react-native';
+import { useFluxColors, FluxSpacing, FluxRadius, FluxShadow } from '@anthropic-flux/react-native-ds';
 
 interface CardProps extends ViewProps {
   variant?: 'default' | 'elevated';
 }
 
-export function Card({ variant = 'default', className, children, ...props }: CardProps) {
-  const base = 'bg-nb-card rounded-2xl p-4';
-  const elevation = variant === 'elevated' ? 'shadow-lg shadow-black/20' : '';
+export function Card({ variant = 'default', className, style, children, ...props }: CardProps) {
+  const colors = useFluxColors();
 
   return (
-    <View className={`${base} ${elevation} ${className ?? ''}`} {...props}>
+    <View
+      className={`bg-nb-card rounded-2xl p-4 ${className ?? ''}`}
+      style={[
+        {
+          backgroundColor: colors.secondary,
+          borderRadius: FluxRadius.lg,
+          padding: FluxSpacing.md,
+        },
+        variant === 'elevated' ? FluxShadow.medium : undefined,
+        style,
+      ]}
+      {...props}
+    >
       {children}
     </View>
   );
