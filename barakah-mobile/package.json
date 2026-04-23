@@ -9,9 +9,9 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@anthropic-flux/react-native-assets": "github:AfzalSiddiqui/flux-react-native-assets",
-    "@anthropic-flux/react-native-ds": "github:AfzalSiddiqui/flux-react-native-ds",
-    "@anthropic-flux/react-native-foundation": "github:AfzalSiddiqui/flux-react-native-foundation",
+    "@flux-ds/react-native-assets": "github:AfzalSiddiqui/flux-react-native-assets",
+    "@flux-ds/react-native-ds": "github:AfzalSiddiqui/flux-react-native-ds",
+    "@flux-ds/react-native-foundation": "github:AfzalSiddiqui/flux-react-native-foundation",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-native-community/slider": "^5.0.1",
     "babel-preset-expo": "^55.0.18",

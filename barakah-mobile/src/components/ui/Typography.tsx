@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, TextProps, TextStyle } from 'react-native';
-import { useFluxColors, FluxTypography } from '@anthropic-flux/react-native-ds';
+import { useFluxColors, FluxTypography } from '@flux-ds/react-native-ds';
 
 type Variant = 'h1' | 'h2' | 'h3' | 'body' | 'bodyBold' | 'caption' | 'captionBold' | 'small' | 'smallBold';
 

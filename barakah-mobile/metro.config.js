@@ -5,7 +5,7 @@ const path = require("path");
 const config = getDefaultConfig(__dirname);
 
 config.watchFolders = [
-  path.resolve(__dirname, "node_modules/@anthropic-flux"),
+  path.resolve(__dirname, "node_modules/@flux-ds"),
 ];
 
 module.exports = withNativeWind(config, { input: "./global.css" });

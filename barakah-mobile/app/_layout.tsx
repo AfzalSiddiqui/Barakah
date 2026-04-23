@@ -6,7 +6,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as SplashScreen from 'expo-splash-screen';
-import { FluxThemeProvider } from '@anthropic-flux/react-native-ds';
+import { FluxThemeProvider } from '@flux-ds/react-native-ds';
 import { BarakahDarkTheme, BarakahLightTheme } from '../src/theme/fluxBarakahTheme';
 import { useSettingsStore } from '../src/store/settingsStore';
 

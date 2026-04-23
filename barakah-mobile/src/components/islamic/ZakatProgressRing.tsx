@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import Svg, { Circle } from 'react-native-svg';
-import { Typography } from '../ui/Typography';
+import { useFluxColors } from '@flux-ds/react-native-ds';
+import { FluxText, FluxProgressRing } from '@flux-ds/react-native-foundation';
 import { formatCurrency } from '../../lib/formatters';
 
 interface ZakatProgressRingProps {
@@ -19,52 +19,29 @@ export function ZakatProgressRing({
   size = 160,
   className,
 }: ZakatProgressRingProps) {
-  const strokeWidth = 10;
-  const radius = (size - strokeWidth) / 2;
-  const circumference = 2 * Math.PI * radius;
+  const colors = useFluxColors();
   const progress = nisabThreshold > 0 ? Math.min(netWealth / nisabThreshold, 2) / 2 : 0;
-  const strokeDashoffset = circumference * (1 - progress);
   const isAboveNisab = netWealth >= nisabThreshold;
 
   return (
     <View className={`items-center ${className ?? ''}`}>
-      <View style={{ width: size, height: size }}>
-        <Svg width={size} height={size}>
-          {/* Background circle */}
-          <Circle
-            cx={size / 2}
-            cy={size / 2}
-            r={radius}
-            stroke="#1C2333"
-            strokeWidth={strokeWidth}
-            fill="none"
-          />
-          {/* Progress circle */}
-          <Circle
-            cx={size / 2}
-            cy={size / 2}
-            r={radius}
-            stroke={isAboveNisab ? '#D4A843' : '#6B7B8D'}
-            strokeWidth={strokeWidth}
-            fill="none"
-            strokeDasharray={`${circumference}`}
-            strokeDashoffset={strokeDashoffset}
-            strokeLinecap="round"
-            transform={`rotate(-90 ${size / 2} ${size / 2})`}
-          />
-        </Svg>
-        <View className="absolute inset-0 items-center justify-center">
-          <Typography variant="small" className="text-nb-muted">
-            Zakat Due
-          </Typography>
-          <Typography variant="h3" className="text-nb-gold">
-            {formatCurrency(zakatDue)}
-          </Typography>
-          <Typography variant="small" className="text-nb-muted">
-            2.5%
-          </Typography>
-        </View>
-      </View>
+      <FluxProgressRing
+        progress={progress}
+        size={size}
+        strokeWidth={10}
+        trackColor={colors.secondary}
+        progressColor={isAboveNisab ? colors.warning : colors.textSecondary}
+      >
+        <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>
+          Zakat Due
+        </FluxText>
+        <FluxText textStyle="headline" color={colors.warning}>
+          {formatCurrency(zakatDue)}
+        </FluxText>
+        <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>
+          2.5%
+        </FluxText>
+      </FluxProgressRing>
     </View>
   );
 }

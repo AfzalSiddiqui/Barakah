@@ -10,14 +10,14 @@
       "@app/*": [
         "./app/*"
       ],
-      "@anthropic-flux/react-native-ds": [
-        "./node_modules/@anthropic-flux/react-native-ds/src/index.ts"
+      "@flux-ds/react-native-ds": [
+        "./node_modules/@flux-ds/react-native-ds/src/index.ts"
       ],
-      "@anthropic-flux/react-native-foundation": [
-        "./node_modules/@anthropic-flux/react-native-foundation/src/index.ts"
+      "@flux-ds/react-native-foundation": [
+        "./node_modules/@flux-ds/react-native-foundation/src/index.ts"
       ],
-      "@anthropic-flux/react-native-assets": [
-        "./node_modules/@anthropic-flux/react-native-assets/src/index.ts"
+      "@flux-ds/react-native-assets": [
+        "./node_modules/@flux-ds/react-native-assets/src/index.ts"
       ]
     }
   },

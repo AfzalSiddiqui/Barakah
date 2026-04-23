@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Typography } from '../ui/Typography';
+import { useFluxColors } from '@flux-ds/react-native-ds';
+import { FluxText, FluxDivider } from '@flux-ds/react-native-foundation';
 import { formatCurrency, formatDate } from '../../lib/formatters';
 import type { Transaction } from '../../engines/types';
 
@@ -19,29 +20,31 @@ const categoryIcons: Record<string, string> = {
 };
 
 export function TransactionItem({ transaction, isRTL = false }: TransactionItemProps) {
+  const colors = useFluxColors();
   const isCredit = transaction.type === 'credit';
 
   return (
     <View className="flex-row items-center py-2.5 border-b border-nb-surface">
       <View className="w-9 h-9 rounded-full bg-nb-surface items-center justify-center mr-2.5">
-        <Typography variant="body">
+        <FluxText textStyle="body">
           {categoryIcons[transaction.category] ?? '💳'}
-        </Typography>
+        </FluxText>
       </View>
       <View className="flex-1">
-        <Typography variant="captionBold" className="text-nb-text">
+        <FluxText textStyle="caption" color={colors.textPrimary} style={{ fontWeight: '600' }}>
           {isRTL ? transaction.descriptionAr : transaction.description}
-        </Typography>
-        <Typography variant="small" className="text-nb-muted">
+        </FluxText>
+        <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>
           {formatDate(transaction.date)}
-        </Typography>
+        </FluxText>
       </View>
-      <Typography
-        variant="captionBold"
-        className={isCredit ? 'text-nb-green' : 'text-nb-red'}
+      <FluxText
+        textStyle="caption"
+        color={isCredit ? colors.success : colors.error}
+        style={{ fontWeight: '600' }}
       >
-        {isCredit ? '+' : '-'}{formatCurrency(transaction.amount)}
-      </Typography>
+        {`${isCredit ? '+' : '-'}${formatCurrency(transaction.amount)}`}
+      </FluxText>
     </View>
   );
 }

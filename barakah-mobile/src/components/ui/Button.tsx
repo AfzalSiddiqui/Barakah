@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, TouchableOpacityProps, ActivityIndicator } from 'react-native';
-import { useFluxColors, FluxSpacing, FluxRadius, FluxOpacity } from '@anthropic-flux/react-native-ds';
-import { FluxText } from '@anthropic-flux/react-native-foundation';
+import { useFluxColors, FluxSpacing, FluxRadius, FluxOpacity } from '@flux-ds/react-native-ds';
+import { FluxText } from '@flux-ds/react-native-foundation';
 
 type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
 type ButtonSize = 'sm' | 'md' | 'lg';

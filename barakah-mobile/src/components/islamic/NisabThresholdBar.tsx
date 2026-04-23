@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Typography } from '../ui/Typography';
+import { useFluxColors } from '@flux-ds/react-native-ds';
+import { FluxText, FluxProgressBar } from '@flux-ds/react-native-foundation';
 import { formatCurrency } from '../../lib/formatters';
 
 interface NisabThresholdBarProps {
@@ -10,35 +11,37 @@ interface NisabThresholdBarProps {
 }
 
 export function NisabThresholdBar({ netWealth, nisabThreshold, className }: NisabThresholdBarProps) {
-  const progress = Math.min((netWealth / nisabThreshold) * 100, 100);
+  const colors = useFluxColors();
+  const progress = Math.min(netWealth / nisabThreshold, 1);
   const isAboveNisab = netWealth >= nisabThreshold;
 
   return (
     <View className={className}>
       <View className="flex-row justify-between mb-2">
-        <Typography variant="captionBold" className="text-nb-muted">
+        <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontWeight: '600' }}>
           Nisab Threshold
-        </Typography>
-        <Typography
-          variant="captionBold"
-          className={isAboveNisab ? 'text-nb-gold' : 'text-nb-muted'}
+        </FluxText>
+        <FluxText
+          textStyle="caption"
+          color={isAboveNisab ? colors.warning : colors.textSecondary}
+          style={{ fontWeight: '600' }}
         >
           {isAboveNisab ? 'Above Nisab' : 'Below Nisab'}
-        </Typography>
+        </FluxText>
       </View>
-      <View className="h-3 bg-nb-surface rounded-full overflow-hidden">
-        <View
-          className={`h-full rounded-full ${isAboveNisab ? 'bg-nb-gold' : 'bg-nb-muted'}`}
-          style={{ width: `${progress}%` }}
-        />
-      </View>
+      <FluxProgressBar
+        progress={progress}
+        height={12}
+        trackColor={colors.surface}
+        progressColor={isAboveNisab ? colors.warning : colors.textSecondary}
+      />
       <View className="flex-row justify-between mt-1">
-        <Typography variant="small" className="text-nb-muted">
+        <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>
           {formatCurrency(netWealth)}
-        </Typography>
-        <Typography variant="small" className="text-nb-muted">
+        </FluxText>
+        <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>
           {formatCurrency(nisabThreshold)}
-        </Typography>
+        </FluxText>
       </View>
     </View>
   );

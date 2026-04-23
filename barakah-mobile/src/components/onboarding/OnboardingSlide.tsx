@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Dimensions } from 'react-native';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
-import { Typography } from '../ui/Typography';
+import { useFluxColors } from '@flux-ds/react-native-ds';
+import { FluxText } from '@flux-ds/react-native-foundation';
 
 const { width } = Dimensions.get('window');
 
@@ -13,6 +14,8 @@ interface OnboardingSlideProps {
 }
 
 export function OnboardingSlide({ icon, title, subtitle, accentColor }: OnboardingSlideProps) {
+  const colors = useFluxColors();
+
   return (
     <View style={{ width }} className="flex-1 items-center justify-center px-8">
       <Animated.View
@@ -20,19 +23,19 @@ export function OnboardingSlide({ icon, title, subtitle, accentColor }: Onboardi
         className="w-32 h-32 rounded-full items-center justify-center mb-8"
         style={{ backgroundColor: `${accentColor}20` }}
       >
-        <Typography variant="h1" className="text-[56px]">
+        <FluxText textStyle="largeTitle" style={{ fontSize: 56 }}>
           {icon}
-        </Typography>
+        </FluxText>
       </Animated.View>
       <Animated.View entering={FadeInDown.delay(200).duration(600)}>
-        <Typography variant="h2" className="text-nb-text text-center mb-4">
+        <FluxText textStyle="title2" color={colors.textPrimary} style={{ textAlign: 'center', marginBottom: 16 }}>
           {title}
-        </Typography>
+        </FluxText>
       </Animated.View>
       <Animated.View entering={FadeInDown.delay(400).duration(600)}>
-        <Typography variant="body" className="text-nb-muted text-center leading-6">
+        <FluxText textStyle="body" color={colors.textSecondary} style={{ textAlign: 'center', lineHeight: 24, fontSize: 14 }}>
           {subtitle}
-        </Typography>
+        </FluxText>
       </Animated.View>
     </View>
   );

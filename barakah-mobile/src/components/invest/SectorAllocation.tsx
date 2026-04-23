@@ -1,10 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Typography } from '../ui/Typography';
+import { useFluxColors } from '@flux-ds/react-native-ds';
+import { FluxText, FluxProgressBar } from '@flux-ds/react-native-foundation';
 import { sectorAllocation } from '../../data/mockInvestments';
 import { useRTL } from '../../hooks/useRTL';
 
 export function SectorAllocation() {
+  const colors = useFluxColors();
   const { isRTL, flexRow } = useRTL();
 
   return (
@@ -12,19 +14,19 @@ export function SectorAllocation() {
       {sectorAllocation.map((sector) => (
         <View key={sector.sector}>
           <View className={`${flexRow} justify-between mb-1`}>
-            <Typography variant="caption" className="text-nb-text">
+            <FluxText textStyle="caption" color={colors.textPrimary}>
               {isRTL ? sector.sectorAr : sector.sector}
-            </Typography>
-            <Typography variant="captionBold" className="text-nb-text">
-              {sector.percentage}%
-            </Typography>
+            </FluxText>
+            <FluxText textStyle="caption" color={colors.textPrimary} style={{ fontWeight: '600' }}>
+              {`${sector.percentage}%`}
+            </FluxText>
           </View>
-          <View className="h-2 bg-nb-muted/20 rounded-full overflow-hidden">
-            <View
-              className="h-full rounded-full"
-              style={{ width: `${sector.percentage}%`, backgroundColor: sector.color }}
-            />
-          </View>
+          <FluxProgressBar
+            progress={sector.percentage / 100}
+            height={8}
+            trackColor={colors.border}
+            progressColor={sector.color}
+          />
         </View>
       ))}
     </View>

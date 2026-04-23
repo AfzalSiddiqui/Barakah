@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity } from 'react-native';
-import { Typography } from '../ui/Typography';
+import { useFluxColors } from '@flux-ds/react-native-ds';
+import { FluxText } from '@flux-ds/react-native-foundation';
 
 interface ChatInputProps {
   onSend: (message: string) => void;
@@ -9,6 +10,7 @@ interface ChatInputProps {
 }
 
 export function ChatInput({ onSend, disabled, placeholder = 'Ask about your finances...' }: ChatInputProps) {
+  const colors = useFluxColors();
   const [text, setText] = useState('');
 
   const handleSend = () => {
@@ -18,12 +20,14 @@ export function ChatInput({ onSend, disabled, placeholder = 'Ask about your fina
     }
   };
 
+  const canSend = text.trim() && !disabled;
+
   return (
     <View className="flex-row items-end bg-nb-surface border-t border-nb-card px-4 py-3">
       <TextInput
         className="flex-1 bg-nb-card text-nb-text text-[13px] rounded-2xl px-4 py-2.5 mr-3 max-h-[100px]"
         placeholder={placeholder}
-        placeholderTextColor="#6B7B8D"
+        placeholderTextColor={colors.textSecondary}
         value={text}
         onChangeText={setText}
         multiline
@@ -33,18 +37,19 @@ export function ChatInput({ onSend, disabled, placeholder = 'Ask about your fina
       />
       <TouchableOpacity
         onPress={handleSend}
-        disabled={!text.trim() || disabled}
+        disabled={!canSend}
         className={`w-11 h-11 rounded-full items-center justify-center ${
-          text.trim() && !disabled ? 'bg-nb-green' : 'bg-nb-card'
+          canSend ? 'bg-nb-green' : 'bg-nb-card'
         }`}
         activeOpacity={0.7}
       >
-        <Typography
-          variant="bodyBold"
-          className={text.trim() && !disabled ? 'text-nb-dark' : 'text-nb-muted'}
+        <FluxText
+          textStyle="body"
+          color={canSend ? colors.onPrimary : colors.textSecondary}
+          style={{ fontWeight: '600' }}
         >
           ↑
-        </Typography>
+        </FluxText>
       </TouchableOpacity>
     </View>
   );

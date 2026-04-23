@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Typography } from '../ui/Typography';
+import { useFluxColors } from '@flux-ds/react-native-ds';
+import { FluxText } from '@flux-ds/react-native-foundation';
 import type { ChatMessage } from '../../engines/types';
 
 interface ChatBubbleProps {
@@ -9,6 +10,7 @@ interface ChatBubbleProps {
 }
 
 export function ChatBubble({ message, onActionPress }: ChatBubbleProps) {
+  const colors = useFluxColors();
   const isUser = message.role === 'user';
 
   return (
@@ -18,12 +20,13 @@ export function ChatBubble({ message, onActionPress }: ChatBubbleProps) {
           isUser ? 'bg-nb-green rounded-br-sm' : 'bg-nb-card rounded-bl-sm'
         }`}
       >
-        <Typography
-          variant="body"
-          className={isUser ? 'text-nb-dark' : 'text-nb-text'}
+        <FluxText
+          textStyle="body"
+          color={isUser ? colors.onPrimary : colors.textPrimary}
+          style={{ fontSize: 14 }}
         >
           {message.content}
-        </Typography>
+        </FluxText>
       </View>
       {message.actions && message.actions.length > 0 && (
         <View className="flex-row flex-wrap mt-2 gap-2">
@@ -34,9 +37,9 @@ export function ChatBubble({ message, onActionPress }: ChatBubbleProps) {
               className="bg-nb-surface border border-nb-green/30 rounded-full px-3 py-1.5"
               activeOpacity={0.7}
             >
-              <Typography variant="smallBold" className="text-nb-green">
+              <FluxText textStyle="caption" color={colors.success} style={{ fontWeight: '600', fontSize: 10 }}>
                 {action.label}
-              </Typography>
+              </FluxText>
             </TouchableOpacity>
           ))}
         </View>

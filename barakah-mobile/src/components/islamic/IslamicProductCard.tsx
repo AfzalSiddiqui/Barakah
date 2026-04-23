@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { Typography } from '../ui/Typography';
+import { useFluxColors } from '@flux-ds/react-native-ds';
+import { FluxText } from '@flux-ds/react-native-foundation';
 import type { MurabahaProduct } from '../../engines/types';
 
 interface IslamicProductCardProps {
@@ -10,6 +11,8 @@ interface IslamicProductCardProps {
 }
 
 export function IslamicProductCard({ product, selected, onSelect }: IslamicProductCardProps) {
+  const colors = useFluxColors();
+
   return (
     <TouchableOpacity
       onPress={onSelect}
@@ -19,18 +22,19 @@ export function IslamicProductCard({ product, selected, onSelect }: IslamicProdu
       }`}
     >
       <View className="items-center">
-        <Typography variant="h2" className="mb-2">
+        <FluxText textStyle="title" style={{ marginBottom: 8 }}>
           {product.icon}
-        </Typography>
-        <Typography
-          variant="captionBold"
-          className={selected ? 'text-nb-green' : 'text-nb-text'}
+        </FluxText>
+        <FluxText
+          textStyle="caption"
+          color={selected ? colors.success : colors.textPrimary}
+          style={{ fontWeight: '600' }}
         >
           {product.name}
-        </Typography>
-        <Typography variant="small" className="text-nb-muted mt-1">
-          From {(product.profitRate * 100).toFixed(1)}%
-        </Typography>
+        </FluxText>
+        <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10, marginTop: 4 }}>
+          {`From ${(product.profitRate * 100).toFixed(1)}%`}
+        </FluxText>
       </View>
     </TouchableOpacity>
   );

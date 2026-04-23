@@ -1,75 +1,78 @@
 import React from 'react';
 import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useFluxColors } from '@flux-ds/react-native-ds';
+import { FluxText, FluxDivider } from '@flux-ds/react-native-foundation';
 import { Card } from '../ui/Card';
-import { Typography } from '../ui/Typography';
 import { usePortfolioTotals } from '../../store/investStore';
 import { useRTL } from '../../hooks/useRTL';
 
 export function PortfolioSummaryCard() {
   const { t } = useTranslation();
+  const colors = useFluxColors();
   const { totalValue, dailyPL, totalPL, halalPercent, stockValue, metalValue } = usePortfolioTotals();
   const { isRTL, flexRow, textAlign } = useRTL();
 
-  const plColor = dailyPL >= 0 ? 'text-nb-green' : 'text-nb-red';
+  const plColor = dailyPL >= 0 ? colors.success : colors.error;
   const plSign = dailyPL >= 0 ? '+' : '';
-  const totalPlColor = totalPL >= 0 ? 'text-nb-green' : 'text-nb-red';
+  const totalPlColor = totalPL >= 0 ? colors.success : colors.error;
   const totalPlSign = totalPL >= 0 ? '+' : '';
+  const align = isRTL ? 'right' : 'left';
 
   return (
     <Card variant="elevated">
-      <Typography variant="caption" className={`text-nb-muted ${textAlign}`}>
+      <FluxText textStyle="caption" color={colors.textSecondary} style={{ textAlign: align }}>
         {t('invest.portfolioValue')}
-      </Typography>
-      <Typography variant="h1" className={`text-nb-text mt-1 ${textAlign}`}>
-        AED {totalValue.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
-      </Typography>
+      </FluxText>
+      <FluxText textStyle="title" color={colors.textPrimary} style={{ marginTop: 4, textAlign: align }}>
+        {`AED ${totalValue.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`}
+      </FluxText>
 
       <View className={`${flexRow} mt-3 gap-4`}>
         <View className="flex-1">
-          <Typography variant="small" className="text-nb-muted">
+          <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>
             {t('invest.dailyPL')}
-          </Typography>
-          <Typography variant="bodyBold" className={plColor}>
-            {plSign}{dailyPL.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-          </Typography>
+          </FluxText>
+          <FluxText textStyle="body" color={plColor} style={{ fontWeight: '600', fontSize: 14 }}>
+            {`${plSign}${dailyPL.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+          </FluxText>
         </View>
         <View className="flex-1">
-          <Typography variant="small" className="text-nb-muted">
+          <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>
             {t('invest.totalPL')}
-          </Typography>
-          <Typography variant="bodyBold" className={totalPlColor}>
-            {totalPlSign}{totalPL.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-          </Typography>
+          </FluxText>
+          <FluxText textStyle="body" color={totalPlColor} style={{ fontWeight: '600', fontSize: 14 }}>
+            {`${totalPlSign}${totalPL.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+          </FluxText>
         </View>
         <View className="flex-1">
-          <Typography variant="small" className="text-nb-muted">
+          <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>
             {t('invest.halalCompliance')}
-          </Typography>
-          <Typography variant="bodyBold" className="text-nb-green">
-            {halalPercent}%
-          </Typography>
+          </FluxText>
+          <FluxText textStyle="body" color={colors.success} style={{ fontWeight: '600', fontSize: 14 }}>
+            {`${halalPercent}%`}
+          </FluxText>
         </View>
       </View>
 
-      <View className="h-px bg-nb-muted/20 my-3" />
+      <FluxDivider style={{ marginVertical: 12 }} />
 
       <View className={`${flexRow} gap-4`}>
         <View className="flex-1">
-          <Typography variant="small" className="text-nb-muted">
+          <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>
             {t('invest.stocks')}
-          </Typography>
-          <Typography variant="captionBold" className="text-nb-text">
-            AED {stockValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}
-          </Typography>
+          </FluxText>
+          <FluxText textStyle="caption" color={colors.textPrimary} style={{ fontWeight: '600' }}>
+            {`AED ${stockValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}`}
+          </FluxText>
         </View>
         <View className="flex-1">
-          <Typography variant="small" className="text-nb-muted">
+          <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>
             {t('invest.metals')}
-          </Typography>
-          <Typography variant="captionBold" className="text-nb-text">
-            AED {metalValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}
-          </Typography>
+          </FluxText>
+          <FluxText textStyle="caption" color={colors.textPrimary} style={{ fontWeight: '600' }}>
+            {`AED ${metalValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}`}
+          </FluxText>
         </View>
       </View>
     </Card>

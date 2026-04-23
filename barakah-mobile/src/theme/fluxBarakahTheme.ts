@@ -1,4 +1,4 @@
-import { FluxTheme } from '@anthropic-flux/react-native-ds';
+import { FluxTheme } from '@flux-ds/react-native-ds';
 
 export const BarakahDarkTheme: FluxTheme = {
   primary: '#00D4AA',

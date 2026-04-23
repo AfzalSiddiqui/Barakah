@@ -1,7 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
+import { useFluxColors, hexToRgba } from '@flux-ds/react-native-ds';
+import { FluxText } from '@flux-ds/react-native-foundation';
 import { Card } from '../ui/Card';
-import { Typography } from '../ui/Typography';
 import { formatCurrency } from '../../lib/formatters';
 
 interface ProfitShareWidgetProps {
@@ -17,33 +18,34 @@ export function ProfitShareWidget({
   annualizedReturn,
   className,
 }: ProfitShareWidgetProps) {
+  const colors = useFluxColors();
   const isPositive = amount >= 0;
-  const colorClass = isPositive ? 'text-nb-green' : 'text-nb-red';
-  const bgClass = isPositive ? 'bg-nb-green/20' : 'bg-nb-red/20';
+  const color = isPositive ? colors.success : colors.error;
+  const bg = hexToRgba(color, 0.2);
   const sign = isPositive ? '+' : '-';
 
   return (
     <Card className={`${className ?? ''}`}>
       <View className="flex-row justify-between items-center mb-3">
-        <Typography variant="captionBold" className="text-nb-muted">
+        <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontWeight: '600' }}>
           Profit Share
-        </Typography>
-        <Typography variant="small" className="text-nb-gold">
+        </FluxText>
+        <FluxText textStyle="caption" color={colors.warning} style={{ fontSize: 10 }}>
           {period}
-        </Typography>
+        </FluxText>
       </View>
-      <Typography variant="h3" className={`${colorClass} mb-1`}>
-        {sign}{formatCurrency(Math.abs(amount))}
-      </Typography>
+      <FluxText textStyle="headline" color={color} style={{ marginBottom: 4 }}>
+        {`${sign}${formatCurrency(Math.abs(amount))}`}
+      </FluxText>
       <View className="flex-row items-center">
-        <View className={`${bgClass} rounded-full px-2 py-0.5 mr-2`}>
-          <Typography variant="small" className={colorClass}>
-            {isPositive ? '+' : ''}{(annualizedReturn * 100).toFixed(1)}% APR
-          </Typography>
+        <View style={{ backgroundColor: bg, borderRadius: 9999, paddingHorizontal: 8, paddingVertical: 2, marginRight: 8 }}>
+          <FluxText textStyle="caption" color={color} style={{ fontSize: 10 }}>
+            {`${isPositive ? '+' : ''}${(annualizedReturn * 100).toFixed(1)}% APR`}
+          </FluxText>
         </View>
-        <Typography variant="small" className="text-nb-muted">
+        <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>
           Mudarabah Return
-        </Typography>
+        </FluxText>
       </View>
     </Card>
   );

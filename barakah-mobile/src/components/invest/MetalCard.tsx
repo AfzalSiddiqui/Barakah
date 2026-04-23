@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Typography } from '../ui/Typography';
+import { useFluxColors } from '@flux-ds/react-native-ds';
+import { FluxText } from '@flux-ds/react-native-foundation';
 import { Badge } from '../ui/Badge';
 import type { MetalHolding } from '../../engines/types';
 import { useRTL } from '../../hooks/useRTL';
@@ -10,36 +11,37 @@ interface MetalCardProps {
 }
 
 export function MetalCard({ metal }: MetalCardProps) {
+  const colors = useFluxColors();
   const { isRTL, flexRow } = useRTL();
 
   const totalValue = metal.weightGrams * metal.currentPricePerGram;
   const totalCost = metal.weightGrams * metal.purchasePricePerGram;
   const pl = totalValue - totalCost;
   const plPercent = ((pl / totalCost) * 100).toFixed(1);
-  const plColor = pl >= 0 ? 'text-nb-green' : 'text-nb-red';
+  const plColor = pl >= 0 ? colors.success : colors.error;
   const icon = metal.type === 'gold' ? '🥇' : '🥈';
 
   return (
     <View className="bg-nb-surface rounded-xl p-3 mb-2">
       <View className={`${flexRow} justify-between items-center`}>
         <View className={`${flexRow} items-center gap-2 flex-1`}>
-          <Typography variant="h3">{icon}</Typography>
+          <FluxText textStyle="headline">{icon}</FluxText>
           <View>
-            <Typography variant="bodyBold" className="text-nb-text">
+            <FluxText textStyle="body" color={colors.textPrimary} style={{ fontWeight: '600', fontSize: 14 }}>
               {isRTL ? metal.nameAr : metal.name}
-            </Typography>
-            <Typography variant="small" className="text-nb-muted">
-              {metal.weightGrams}g @ {metal.currentPricePerGram.toFixed(2)} {metal.currency}
-            </Typography>
+            </FluxText>
+            <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>
+              {`${metal.weightGrams}g @ ${metal.currentPricePerGram.toFixed(2)} ${metal.currency}`}
+            </FluxText>
           </View>
         </View>
         <View className="items-end">
-          <Typography variant="bodyBold" className="text-nb-text">
-            {totalValue.toLocaleString(undefined, { maximumFractionDigits: 0 })} {metal.currency}
-          </Typography>
-          <Typography variant="small" className={plColor}>
-            {pl >= 0 ? '+' : ''}{pl.toFixed(0)} ({plPercent}%)
-          </Typography>
+          <FluxText textStyle="body" color={colors.textPrimary} style={{ fontWeight: '600', fontSize: 14 }}>
+            {`${totalValue.toLocaleString(undefined, { maximumFractionDigits: 0 })} ${metal.currency}`}
+          </FluxText>
+          <FluxText textStyle="caption" color={plColor} style={{ fontSize: 10 }}>
+            {`${pl >= 0 ? '+' : ''}${pl.toFixed(0)} (${plPercent}%)`}
+          </FluxText>
         </View>
       </View>
       <Badge label="Sharia Compliant" variant="success" className="mt-2" />

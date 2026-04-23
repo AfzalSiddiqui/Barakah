@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput, TextInputProps, View } from 'react-native';
-import { useFluxColors, FluxSpacing, FluxRadius, FluxBorder } from '@anthropic-flux/react-native-ds';
-import { FluxText } from '@anthropic-flux/react-native-foundation';
+import { useFluxColors, FluxSpacing, FluxRadius, FluxBorder } from '@flux-ds/react-native-ds';
+import { FluxText } from '@flux-ds/react-native-foundation';
 
 interface InputProps extends TextInputProps {
   label?: string;

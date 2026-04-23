@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ViewProps } from 'react-native';
-import { useFluxColors, FluxSpacing, FluxRadius, FluxShadow } from '@anthropic-flux/react-native-ds';
+import { useFluxColors, FluxSpacing, FluxRadius, FluxShadow } from '@flux-ds/react-native-ds';
 
 interface CardProps extends ViewProps {
   variant?: 'default' | 'elevated';

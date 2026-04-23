@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Typography } from '../ui/Typography';
+import { useFluxColors, hexToRgba } from '@flux-ds/react-native-ds';
+import { FluxText } from '@flux-ds/react-native-foundation';
 import type { InvestmentHolding } from '../../engines/types';
 import { useRTL } from '../../hooks/useRTL';
 import { useTranslation } from 'react-i18next';
@@ -11,17 +12,19 @@ interface HoldingRowProps {
   onToggle: () => void;
 }
 
-const statusConfig = {
-  halal: { color: 'text-nb-green', bg: 'bg-nb-green/20', dot: 'bg-nb-green', label: 'Halal' },
-  haram: { color: 'text-nb-red', bg: 'bg-nb-red/20', dot: 'bg-nb-red', label: 'Non-Compliant' },
-  doubtful: { color: 'text-nb-gold', bg: 'bg-nb-gold/20', dot: 'bg-nb-gold', label: 'Review' },
-} as const;
-
 export function HoldingRow({ holding, isExpanded, onToggle }: HoldingRowProps) {
+  const colors = useFluxColors();
   const { isRTL, flexRow } = useRTL();
   const { t } = useTranslation();
-  const config = statusConfig[holding.screening.status];
-  const changeColor = holding.dailyChangePercent >= 0 ? 'text-nb-green' : 'text-nb-red';
+
+  const statusColors = {
+    halal: { color: colors.success, bg: hexToRgba(colors.success, 0.2), label: 'Halal' },
+    haram: { color: colors.error, bg: hexToRgba(colors.error, 0.2), label: 'Non-Compliant' },
+    doubtful: { color: colors.warning, bg: hexToRgba(colors.warning, 0.2), label: 'Review' },
+  } as const;
+
+  const config = statusColors[holding.screening.status];
+  const changeColor = holding.dailyChangePercent >= 0 ? colors.success : colors.error;
   const changeSign = holding.dailyChangePercent >= 0 ? '+' : '';
   const totalValue = holding.shares * holding.currentPrice;
 
@@ -31,50 +34,47 @@ export function HoldingRow({ holding, isExpanded, onToggle }: HoldingRowProps) {
       activeOpacity={0.7}
       className="bg-nb-surface rounded-xl p-3 mb-2"
     >
-      {/* Main Row */}
       <View className={`${flexRow} justify-between items-center`}>
         <View className="flex-1">
           <View className={`${flexRow} items-center gap-2`}>
-            <Typography variant="bodyBold" className="text-nb-text">
+            <FluxText textStyle="body" color={colors.textPrimary} style={{ fontWeight: '600', fontSize: 14 }}>
               {isRTL ? holding.nameAr : holding.name}
-            </Typography>
-            <View className={`${config.bg} rounded-full px-2 py-0.5 ${flexRow} items-center`}>
-              <View className={`w-1.5 h-1.5 rounded-full ${config.dot} mr-1`} />
-              <Typography variant="small" className={config.color}>
+            </FluxText>
+            <View style={{ backgroundColor: config.bg, borderRadius: 9999, paddingHorizontal: 8, paddingVertical: 2, flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: config.color, marginRight: 4 }} />
+              <FluxText textStyle="caption" color={config.color} style={{ fontSize: 10 }}>
                 {config.label}
-              </Typography>
+              </FluxText>
             </View>
           </View>
-          <Typography variant="small" className="text-nb-muted">
-            {holding.ticker} · {isRTL ? holding.sectorAr : holding.sector} · {holding.shares} {t('invest.shares')}
-          </Typography>
+          <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>
+            {`${holding.ticker} · ${isRTL ? holding.sectorAr : holding.sector} · ${holding.shares} ${t('invest.shares')}`}
+          </FluxText>
         </View>
         <View className="items-end">
-          <Typography variant="bodyBold" className="text-nb-text">
+          <FluxText textStyle="body" color={colors.textPrimary} style={{ fontWeight: '600', fontSize: 14 }}>
             {holding.currentPrice.toFixed(2)}
-          </Typography>
-          <Typography variant="small" className={changeColor}>
-            {changeSign}{holding.dailyChangePercent.toFixed(1)}%
-          </Typography>
+          </FluxText>
+          <FluxText textStyle="caption" color={changeColor} style={{ fontSize: 10 }}>
+            {`${changeSign}${holding.dailyChangePercent.toFixed(1)}%`}
+          </FluxText>
         </View>
       </View>
 
-      {/* Value Row */}
       <View className={`${flexRow} justify-between mt-1`}>
-        <Typography variant="small" className="text-nb-muted">
-          {t('invest.value')}: {totalValue.toLocaleString(undefined, { maximumFractionDigits: 0 })} {holding.currency}
-        </Typography>
-        <Typography variant="small" className="text-nb-muted">
-          {t('invest.avgCost')}: {holding.avgCost.toFixed(2)}
-        </Typography>
+        <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>
+          {`${t('invest.value')}: ${totalValue.toLocaleString(undefined, { maximumFractionDigits: 0 })} ${holding.currency}`}
+        </FluxText>
+        <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>
+          {`${t('invest.avgCost')}: ${holding.avgCost.toFixed(2)}`}
+        </FluxText>
       </View>
 
-      {/* Expanded AAOIFI Detail */}
       {isExpanded && (
         <View className="mt-3 pt-3 border-t border-nb-muted/20">
-          <Typography variant="captionBold" className="text-nb-accent mb-2">
+          <FluxText textStyle="caption" color={colors.accent} style={{ fontWeight: '600', marginBottom: 8 }}>
             {t('invest.aaoifiScreening')}
-          </Typography>
+          </FluxText>
           <View className="gap-1">
             <ScreeningRow
               label={t('invest.debtToEquity')}
@@ -104,9 +104,9 @@ export function HoldingRow({ holding, isExpanded, onToggle }: HoldingRowProps) {
           {holding.screening.failedChecks.length > 0 && (
             <View className="mt-2">
               {holding.screening.failedChecks.map((check, idx) => (
-                <Typography key={idx} variant="small" className="text-nb-red/80 mt-0.5">
+                <FluxText key={idx} textStyle="caption" color={colors.error} style={{ fontSize: 10, marginTop: 2, opacity: 0.8 }}>
                   {check}
-                </Typography>
+                </FluxText>
               ))}
             </View>
           )}
@@ -117,17 +117,19 @@ export function HoldingRow({ holding, isExpanded, onToggle }: HoldingRowProps) {
 }
 
 function ScreeningRow({ label, value, limit, passed }: { label: string; value: string; limit: string; passed: boolean }) {
+  const colors = useFluxColors();
+
   return (
     <View className="flex-row justify-between items-center">
-      <Typography variant="small" className="text-nb-muted flex-1">
+      <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10, flex: 1 }}>
         {label}
-      </Typography>
-      <Typography variant="smallBold" className={passed ? 'text-nb-green' : 'text-nb-red'}>
+      </FluxText>
+      <FluxText textStyle="caption" color={passed ? colors.success : colors.error} style={{ fontSize: 10, fontWeight: '600' }}>
         {value}
-      </Typography>
-      <Typography variant="small" className="text-nb-muted ml-2">
-        / {limit}
-      </Typography>
+      </FluxText>
+      <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10, marginLeft: 8 }}>
+        {`/ ${limit}`}
+      </FluxText>
     </View>
   );
 }

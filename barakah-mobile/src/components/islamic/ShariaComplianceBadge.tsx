@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Typography } from '../ui/Typography';
+import { useFluxColors, hexToRgba } from '@flux-ds/react-native-ds';
+import { FluxText } from '@flux-ds/react-native-foundation';
 import type { ComplianceStatus } from '../../engines/types';
 
 interface ShariaComplianceBadgeProps {
@@ -9,13 +10,6 @@ interface ShariaComplianceBadgeProps {
   showLabel?: boolean;
   className?: string;
 }
-
-const statusConfig: Record<ComplianceStatus, { color: string; bg: string; label: string; icon: string }> = {
-  compliant: { color: 'text-nb-green', bg: 'bg-nb-green/20', label: 'Sharia Compliant', icon: '✓' },
-  non_compliant: { color: 'text-nb-red', bg: 'bg-nb-red/20', label: 'Non-Compliant', icon: '✗' },
-  review_required: { color: 'text-nb-gold', bg: 'bg-nb-gold/20', label: 'Review Required', icon: '!' },
-  pending: { color: 'text-nb-muted', bg: 'bg-nb-muted/20', label: 'Pending Review', icon: '…' },
-};
 
 const sizeClasses = {
   sm: 'px-2 py-0.5',
@@ -29,23 +23,31 @@ export function ShariaComplianceBadge({
   showLabel = true,
   className,
 }: ShariaComplianceBadgeProps) {
+  const colors = useFluxColors();
+
+  const statusConfig: Record<ComplianceStatus, { color: string; bg: string; label: string; icon: string }> = {
+    compliant: { color: colors.success, bg: hexToRgba(colors.success, 0.2), label: 'Sharia Compliant', icon: '✓' },
+    non_compliant: { color: colors.error, bg: hexToRgba(colors.error, 0.2), label: 'Non-Compliant', icon: '✗' },
+    review_required: { color: colors.warning, bg: hexToRgba(colors.warning, 0.2), label: 'Review Required', icon: '!' },
+    pending: { color: colors.textSecondary, bg: hexToRgba(colors.textSecondary, 0.2), label: 'Pending Review', icon: '…' },
+  };
+
   const config = statusConfig[status];
+  const fontSize = size === 'sm' ? 10 : 12;
+  const labelFontSize = size === 'lg' ? 14 : size === 'sm' ? 10 : 12;
 
   return (
-    <View className={`flex-row items-center ${config.bg} rounded-full ${sizeClasses[size]} ${className ?? ''}`}>
-      <Typography
-        variant={size === 'sm' ? 'small' : 'captionBold'}
-        className={`${config.color} mr-1`}
-      >
+    <View
+      className={`flex-row items-center rounded-full ${sizeClasses[size]} ${className ?? ''}`}
+      style={{ backgroundColor: config.bg }}
+    >
+      <FluxText textStyle="caption" color={config.color} style={{ fontSize, marginRight: 4, fontWeight: '600' }}>
         {config.icon}
-      </Typography>
+      </FluxText>
       {showLabel && (
-        <Typography
-          variant={size === 'sm' ? 'small' : size === 'lg' ? 'bodyBold' : 'captionBold'}
-          className={config.color}
-        >
+        <FluxText textStyle="caption" color={config.color} style={{ fontSize: labelFontSize, fontWeight: '600' }}>
           {config.label}
-        </Typography>
+        </FluxText>
       )}
     </View>
   );
