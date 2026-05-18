@@ -132,6 +132,50 @@ export interface MurabahaCalculation {
   product: MurabahaProductType;
 }
 
+// ─── Expense Tracker ───
+export type ExpenseCategory =
+  | 'food'
+  | 'shopping'
+  | 'transport'
+  | 'bills'
+  | 'health'
+  | 'education'
+  | 'entertainment'
+  | 'charity'
+  | 'other';
+
+export type CardType = 'credit' | 'debit';
+export type ExpenseTransactionType = 'purchase' | 'refund';
+
+export interface ParsedExpense {
+  id: string;
+  amount: number;
+  currency: string;
+  merchant: string;
+  category: ExpenseCategory;
+  cardType: CardType;
+  cardLastFour: string;
+  transactionType: ExpenseTransactionType;
+  date: string;
+  rawSms: string;
+}
+
+export interface CategoryBreakdownItem {
+  category: ExpenseCategory;
+  total: number;
+  count: number;
+  percentage: number;
+}
+
+export interface ExpenseSummary {
+  totalSpent: number;
+  totalRefunded: number;
+  netSpend: number;
+  transactionCount: number;
+  dailyAverage: number;
+  breakdown: CategoryBreakdownItem[];
+}
+
 // ─── Audit Log ───
 export type AuditEventType =
   | 'zakat_calculated'
@@ -140,7 +184,8 @@ export type AuditEventType =
   | 'murabaha_calculation'
   | 'compliance_verified'
   | 'language_changed'
-  | 'user_action';
+  | 'user_action'
+  | 'expense_parsed';
 
 export interface AuditEntry {
   id: string;
