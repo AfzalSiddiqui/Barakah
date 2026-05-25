@@ -1,4 +1,4 @@
-import type { InvestmentHolding, MetalHolding, WatchlistItem, ScreeningCriteria } from '../engines/types';
+import type { InvestmentHolding, MetalHolding, WatchlistItem, ScreeningCriteria, MetalInvestmentPlan } from '../engines/types';
 import { screenInvestment } from '../engines/halalScreener';
 
 // ─── Metal Holdings (Gold & Silver) ───
@@ -165,6 +165,36 @@ export const mockWatchlist: WatchlistItem[] = [
     dailyChangePercent: 0.3,
     currency: 'SAR',
     status: 'doubtful',
+  },
+];
+
+// ─── Mock Active Investment Plans ───
+export const mockMetalPlans: MetalInvestmentPlan[] = [
+  {
+    id: 'plan-001',
+    metalType: 'gold',
+    frequency: 'daily',
+    amountPerInterval: 50,
+    currency: 'AED',
+    totalInvested: 1500,
+    gramsAccumulated: 4.81,
+    startDate: '2025-05-01',
+    nextDate: '2025-05-26',
+    isActive: true,
+    createdAt: Date.now() - 30 * 24 * 60 * 60 * 1000,
+  },
+  {
+    id: 'plan-002',
+    metalType: 'silver',
+    frequency: 'monthly',
+    amountPerInterval: 500,
+    currency: 'AED',
+    totalInvested: 1500,
+    gramsAccumulated: 389.61,
+    startDate: '2025-03-01',
+    nextDate: '2025-06-01',
+    isActive: true,
+    createdAt: Date.now() - 90 * 24 * 60 * 60 * 1000,
   },
 ];
 
