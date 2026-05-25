@@ -9,12 +9,14 @@ import { MetalCard } from '../../src/components/invest/MetalCard';
 import { HoldingRow } from '../../src/components/invest/HoldingRow';
 import { WatchlistItem } from '../../src/components/invest/WatchlistItem';
 import { SectorAllocation } from '../../src/components/invest/SectorAllocation';
+import { MetalInvestModal } from '../../src/components/invest/MetalInvestModal';
+import { ActivePlansCard } from '../../src/components/invest/ActivePlansCard';
 import { useInvestStore } from '../../src/store/investStore';
 import { useRTL } from '../../src/hooks/useRTL';
 
 export default function InvestScreen() {
   const { t } = useTranslation();
-  const { holdings, metals, watchlist, expandedHoldingId, toggleExpanded } = useInvestStore();
+  const { holdings, metals, watchlist, expandedHoldingId, toggleExpanded, metalPlans } = useInvestStore();
   const { isRTL, textAlign } = useRTL();
 
   return (
@@ -44,6 +46,16 @@ export default function InvestScreen() {
             <MetalCard key={metal.id} metal={metal} />
           ))}
         </View>
+
+        {/* Investment Plans */}
+        {metalPlans.length > 0 && (
+          <View className="px-5 mt-6">
+            <Typography variant="captionBold" className={`text-nb-muted mb-3 ${textAlign}`}>
+              {t('invest.investmentPlans')}
+            </Typography>
+            <ActivePlansCard />
+          </View>
+        )}
 
         {/* Halal Stocks */}
         <View className="px-5 mt-6">
@@ -82,6 +94,9 @@ export default function InvestScreen() {
           </Card>
         </View>
       </ScrollView>
+
+      {/* Metal Investment Modal */}
+      <MetalInvestModal />
     </SafeAreaView>
   );
 }
