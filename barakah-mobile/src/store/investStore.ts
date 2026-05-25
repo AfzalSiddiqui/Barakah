@@ -1,13 +1,21 @@
 import { create } from 'zustand';
-import type { InvestmentHolding, MetalHolding, WatchlistItem } from '../engines/types';
-import { mockHoldings, mockMetals, mockWatchlist } from '../data/mockInvestments';
+import type { InvestmentHolding, MetalHolding, WatchlistItem, MetalInvestmentPlan, MetalType, MetalInvestFrequency } from '../engines/types';
+import { mockHoldings, mockMetals, mockWatchlist, mockMetalPlans } from '../data/mockInvestments';
 
 interface InvestState {
   holdings: InvestmentHolding[];
   metals: MetalHolding[];
   watchlist: WatchlistItem[];
   expandedHoldingId: string | null;
+  metalPlans: MetalInvestmentPlan[];
+  investModalVisible: boolean;
+  investModalMetal: MetalType | null;
+
   toggleExpanded: (id: string) => void;
+  openInvestModal: (metalType: MetalType) => void;
+  closeInvestModal: () => void;
+  createPlan: (metalType: MetalType, frequency: MetalInvestFrequency, amount: number) => void;
+  cancelPlan: (planId: string) => void;
 }
 
 export const useInvestStore = create<InvestState>((set, get) => ({
@@ -15,10 +23,71 @@ export const useInvestStore = create<InvestState>((set, get) => ({
   metals: mockMetals,
   watchlist: mockWatchlist,
   expandedHoldingId: null,
+  metalPlans: mockMetalPlans,
+  investModalVisible: false,
+  investModalMetal: null,
 
   toggleExpanded: (id) =>
     set((state) => ({
       expandedHoldingId: state.expandedHoldingId === id ? null : id,
+    })),
+
+  openInvestModal: (metalType) =>
+    set({ investModalVisible: true, investModalMetal: metalType }),
+
+  closeInvestModal: () =>
+    set({ investModalVisible: false, investModalMetal: null }),
+
+  createPlan: (metalType, frequency, amount) => {
+    const metal = get().metals.find((m) => m.type === metalType);
+    if (!metal) return;
+
+    const gramsForAmount = amount / metal.currentPricePerGram;
+    const today = new Date().toISOString().split('T')[0];
+
+    let nextDate: string | null = null;
+    if (frequency === 'daily') {
+      const d = new Date();
+      d.setDate(d.getDate() + 1);
+      nextDate = d.toISOString().split('T')[0];
+    } else if (frequency === 'monthly') {
+      const d = new Date();
+      d.setMonth(d.getMonth() + 1);
+      nextDate = d.toISOString().split('T')[0];
+    }
+
+    const newPlan: MetalInvestmentPlan = {
+      id: `plan-${Date.now()}`,
+      metalType,
+      frequency,
+      amountPerInterval: amount,
+      currency: metal.currency,
+      totalInvested: amount,
+      gramsAccumulated: gramsForAmount,
+      startDate: today,
+      nextDate,
+      isActive: frequency !== 'one_time',
+      createdAt: Date.now(),
+    };
+
+    // Update metal holding weight
+    set((state) => ({
+      metalPlans: [...state.metalPlans, newPlan],
+      metals: state.metals.map((m) =>
+        m.type === metalType
+          ? { ...m, weightGrams: m.weightGrams + gramsForAmount }
+          : m,
+      ),
+      investModalVisible: false,
+      investModalMetal: null,
+    }));
+  },
+
+  cancelPlan: (planId) =>
+    set((state) => ({
+      metalPlans: state.metalPlans.map((p) =>
+        p.id === planId ? { ...p, isActive: false, nextDate: null } : p,
+      ),
     })),
 }));
 

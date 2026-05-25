@@ -81,6 +81,23 @@ export interface MetalHolding {
   currency: string;
 }
 
+// ─── Metal Investment Plans ───
+export type MetalInvestFrequency = 'daily' | 'monthly' | 'one_time';
+
+export interface MetalInvestmentPlan {
+  id: string;
+  metalType: MetalType;
+  frequency: MetalInvestFrequency;
+  amountPerInterval: number;
+  currency: string;
+  totalInvested: number;
+  gramsAccumulated: number;
+  startDate: string;
+  nextDate: string | null;
+  isActive: boolean;
+  createdAt: number;
+}
+
 export interface InvestmentHolding {
   id: string;
   name: string;

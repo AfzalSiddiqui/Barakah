@@ -10,11 +10,23 @@ export const colors = {
     text: '#F0F2F5',
     muted: '#6B7B8D',
   },
+  glass: {
+    bg: 'rgba(255, 255, 255, 0.06)',
+    bgLight: 'rgba(255, 255, 255, 0.10)',
+    bgSubtle: 'rgba(255, 255, 255, 0.03)',
+    border: 'rgba(255, 255, 255, 0.12)',
+    borderLight: 'rgba(255, 255, 255, 0.18)',
+    highlight: 'rgba(255, 255, 255, 0.08)',
+    shadow: 'rgba(0, 0, 0, 0.4)',
+  },
   gradients: {
     card: ['#1C2333', '#141922'],
     green: ['#00D4AA', '#00B894'],
     gold: ['#D4A843', '#B8922E'],
     accent: ['#4F8CFF', '#3A6FD4'],
     premium: ['#1C2333', '#0A0E17'],
+    glass: ['rgba(255, 255, 255, 0.08)', 'rgba(255, 255, 255, 0.02)'],
+    glassGreen: ['rgba(0, 212, 170, 0.15)', 'rgba(0, 212, 170, 0.05)'],
+    glassAccent: ['rgba(79, 140, 255, 0.15)', 'rgba(79, 140, 255, 0.05)'],
   },
 } as const;
