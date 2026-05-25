@@ -130,7 +130,7 @@ export function MetalInvestModal() {
                           color={colors.textPrimary}
                           style={{ fontWeight: '700', fontSize: 18 }}
                         >
-                          {t('invest.investIn')} {isRTL ? metal.nameAr : metal.name}
+                          {`${t('invest.investIn')} ${isRTL ? metal.nameAr : metal.name}`}
                         </FluxText>
                         <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 11 }}>
                           {`${metal.currentPricePerGram.toFixed(2)} ${metal.currency}/${t('invest.perGram')}`}
@@ -225,7 +225,7 @@ export function MetalInvestModal() {
                               }
                               style={{ fontWeight: '600', fontSize: 12 }}
                             >
-                              {preset} {metal.currency}
+                              {`${preset} ${metal.currency}`}
                             </FluxText>
                           </TouchableOpacity>
                         ))}
@@ -253,7 +253,7 @@ export function MetalInvestModal() {
                           color={metalColor}
                           style={{ fontWeight: '700', fontSize: 15 }}
                         >
-                          {estimatedGrams.toFixed(4)}g
+                          {`${estimatedGrams.toFixed(4)}g`}
                         </FluxText>
                       </View>
                       <View className={`${flexRow} justify-between items-center`}>
