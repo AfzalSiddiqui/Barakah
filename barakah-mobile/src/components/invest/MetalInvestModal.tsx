@@ -261,7 +261,7 @@ export function MetalInvestModal() {
                           {t('invest.currentPrice')}
                         </FluxText>
                         <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 11 }}>
-                          {metal.currentPricePerGram.toFixed(2)} {metal.currency}/g
+                          {`${metal.currentPricePerGram.toFixed(2)} ${metal.currency}/g`}
                         </FluxText>
                       </View>
                       {frequency !== 'one_time' && (
@@ -274,10 +274,7 @@ export function MetalInvestModal() {
                             color={colors.textPrimary}
                             style={{ fontWeight: '600', fontSize: 11 }}
                           >
-                            {(
-                              numAmount * (frequency === 'daily' ? 365 : 12)
-                            ).toLocaleString()}{' '}
-                            {metal.currency}
+                            {`${(numAmount * (frequency === 'daily' ? 365 : 12)).toLocaleString()} ${metal.currency}`}
                           </FluxText>
                         </View>
                       )}
