@@ -1,18 +1,22 @@
 import React from 'react';
-import { View } from 'react-native';
-import { useFluxColors } from '@flux-ds/react-native-ds';
+import { View, TouchableOpacity } from 'react-native';
+import { useFluxColors, FluxSpacing, FluxRadius, hexToRgba } from '@flux-ds/react-native-ds';
 import { FluxText } from '@flux-ds/react-native-foundation';
+import { useTranslation } from 'react-i18next';
 import { Badge } from '../ui/Badge';
 import type { MetalHolding } from '../../engines/types';
 import { useRTL } from '../../hooks/useRTL';
+import { useInvestStore } from '../../store/investStore';
 
 interface MetalCardProps {
   metal: MetalHolding;
 }
 
 export function MetalCard({ metal }: MetalCardProps) {
+  const { t } = useTranslation();
   const colors = useFluxColors();
   const { isRTL, flexRow } = useRTL();
+  const openInvestModal = useInvestStore((s) => s.openInvestModal);
 
   const totalValue = metal.weightGrams * metal.currentPricePerGram;
   const totalCost = metal.weightGrams * metal.purchasePricePerGram;
@@ -20,6 +24,7 @@ export function MetalCard({ metal }: MetalCardProps) {
   const plPercent = ((pl / totalCost) * 100).toFixed(1);
   const plColor = pl >= 0 ? colors.success : colors.error;
   const icon = metal.type === 'gold' ? '🥇' : '🥈';
+  const metalColor = metal.type === 'gold' ? '#D4A843' : '#C0C0C0';
 
   return (
     <View className="bg-nb-surface rounded-xl p-3 mb-2">
@@ -31,7 +36,7 @@ export function MetalCard({ metal }: MetalCardProps) {
               {isRTL ? metal.nameAr : metal.name}
             </FluxText>
             <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>
-              {`${metal.weightGrams}g @ ${metal.currentPricePerGram.toFixed(2)} ${metal.currency}`}
+              {`${metal.weightGrams.toFixed(2)}g @ ${metal.currentPricePerGram.toFixed(2)} ${metal.currency}`}
             </FluxText>
           </View>
         </View>
@@ -44,7 +49,28 @@ export function MetalCard({ metal }: MetalCardProps) {
           </FluxText>
         </View>
       </View>
-      <Badge label="Sharia Compliant" variant="success" className="mt-2" />
+      <View className={`${flexRow} items-center justify-between mt-2`}>
+        <Badge label={t('invest.shariaCompliant')} variant="success" />
+        <TouchableOpacity
+          onPress={() => openInvestModal(metal.type)}
+          style={{
+            backgroundColor: hexToRgba(metalColor, 0.2),
+            paddingHorizontal: FluxSpacing.md,
+            paddingVertical: FluxSpacing.xs,
+            borderRadius: FluxRadius.full,
+            borderWidth: 1,
+            borderColor: hexToRgba(metalColor, 0.4),
+          }}
+        >
+          <FluxText
+            textStyle="caption"
+            color={metalColor}
+            style={{ fontWeight: '700', fontSize: 11 }}
+          >
+            {t('invest.investButton')}
+          </FluxText>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
