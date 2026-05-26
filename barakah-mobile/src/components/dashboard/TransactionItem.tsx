@@ -24,8 +24,14 @@ export function TransactionItem({ transaction, isRTL = false }: TransactionItemP
   const isCredit = transaction.type === 'credit';
 
   return (
-    <View className="flex-row items-center py-2.5 border-b border-nb-surface">
-      <View className="w-9 h-9 rounded-full bg-nb-surface items-center justify-center mr-2.5">
+    <View
+      className="flex-row items-center py-2.5"
+      style={{ borderBottomWidth: 1, borderBottomColor: 'rgba(255, 255, 255, 0.06)' }}
+    >
+      <View
+        className="w-9 h-9 rounded-full items-center justify-center mr-2.5"
+        style={{ backgroundColor: 'rgba(255, 255, 255, 0.06)' }}
+      >
         <FluxText textStyle="body">
           {categoryIcons[transaction.category] ?? '💳'}
         </FluxText>

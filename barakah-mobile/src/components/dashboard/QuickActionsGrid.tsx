@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useFluxColors } from '@flux-ds/react-native-ds';
 import { FluxText } from '@flux-ds/react-native-foundation';
+import { colors as themeColors } from '../../theme/colors';
 
 interface QuickAction {
   icon: string;
@@ -26,7 +27,14 @@ export function QuickActionsGrid({ actions, className }: QuickActionsGridProps) 
           activeOpacity={0.7}
           className="items-center flex-1"
         >
-          <View className="w-14 h-14 rounded-2xl bg-nb-card items-center justify-center mb-2">
+          <View
+            className="w-14 h-14 rounded-2xl items-center justify-center mb-2"
+            style={{
+              backgroundColor: themeColors.glass.bg,
+              borderWidth: 1,
+              borderColor: themeColors.glass.border,
+            }}
+          >
             <FluxText textStyle="headline">{action.icon}</FluxText>
           </View>
           <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>

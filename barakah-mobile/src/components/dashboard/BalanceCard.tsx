@@ -1,10 +1,12 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { BlurView } from 'expo-blur';
 import { useFluxColors } from '@flux-ds/react-native-ds';
 import { FluxText } from '@flux-ds/react-native-foundation';
 import { ShariaComplianceBadge } from '../islamic/ShariaComplianceBadge';
 import { formatCurrency } from '../../lib/formatters';
+import { colors as themeColors } from '../../theme/colors';
 import type { ComplianceStatus } from '../../engines/types';
 
 interface BalanceCardProps {
@@ -25,32 +27,48 @@ export function BalanceCard({
   const colors = useFluxColors();
 
   return (
-    <LinearGradient
-      colors={[colors.secondary, colors.background]}
-      className={`rounded-2xl p-5 border border-nb-green/10 ${className ?? ''}`}
+    <View
+      className={`rounded-2xl overflow-hidden ${className ?? ''}`}
+      style={{
+        borderWidth: 1,
+        borderColor: themeColors.glass.borderLight,
+      }}
     >
-      <View className="flex-row justify-between items-start mb-4">
-        <View>
-          <FluxText textStyle="caption" color={colors.textSecondary}>
-            Total Balance
-          </FluxText>
-          <FluxText textStyle="title" color={colors.textPrimary} style={{ marginTop: 4 }}>
-            {formatCurrency(balance, currency)}
-          </FluxText>
-        </View>
-        <ShariaComplianceBadge status={shariaStatus} size="sm" />
-      </View>
-      <View className="flex-row justify-between items-center">
-        <FluxText textStyle="caption" color={colors.textSecondary}>
-          {`Account ${accountNumber}`}
-        </FluxText>
-        <View className="flex-row items-center">
-          <View className="w-2 h-2 rounded-full bg-nb-green mr-2" />
-          <FluxText textStyle="caption" color={colors.success} style={{ fontSize: 10 }}>
-            AAOIFI Certified
-          </FluxText>
-        </View>
-      </View>
-    </LinearGradient>
+      <BlurView
+        intensity={30}
+        tint="dark"
+        style={{
+          backgroundColor: Platform.OS === 'android' ? 'rgba(0, 212, 170, 0.06)' : undefined,
+        }}
+      >
+        <LinearGradient
+          colors={[...themeColors.gradients.glassGreen] as [string, string]}
+          className="p-5"
+        >
+          <View className="flex-row justify-between items-start mb-4">
+            <View>
+              <FluxText textStyle="caption" color={colors.textSecondary}>
+                Total Balance
+              </FluxText>
+              <FluxText textStyle="title" color={colors.textPrimary} style={{ marginTop: 4 }}>
+                {formatCurrency(balance, currency)}
+              </FluxText>
+            </View>
+            <ShariaComplianceBadge status={shariaStatus} size="sm" />
+          </View>
+          <View className="flex-row justify-between items-center">
+            <FluxText textStyle="caption" color={colors.textSecondary}>
+              {`Account ${accountNumber}`}
+            </FluxText>
+            <View className="flex-row items-center">
+              <View className="w-2 h-2 rounded-full bg-nb-green mr-2" />
+              <FluxText textStyle="caption" color={colors.success} style={{ fontSize: 10 }}>
+                AAOIFI Certified
+              </FluxText>
+            </View>
+          </View>
+        </LinearGradient>
+      </BlurView>
+    </View>
   );
 }
