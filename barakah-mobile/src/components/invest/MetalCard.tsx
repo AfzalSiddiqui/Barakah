@@ -24,7 +24,7 @@ export function MetalCard({ metal }: MetalCardProps) {
   const plPercent = ((pl / totalCost) * 100).toFixed(1);
   const plColor = pl >= 0 ? colors.success : colors.error;
   const icon = metal.type === 'gold' ? '🥇' : '🥈';
-  const metalColor = metal.type === 'gold' ? '#D4A843' : '#C0C0C0';
+  const metalColor = metal.type === 'gold' ? '#C9A84C' : '#C0C0C0';
 
   return (
     <View className="bg-nb-surface rounded-xl p-3 mb-2">

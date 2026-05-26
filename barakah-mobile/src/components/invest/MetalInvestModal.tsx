@@ -29,7 +29,7 @@ export function MetalInvestModal() {
   if (!metal) return null;
 
   const icon = metal.type === 'gold' ? '🥇' : '🥈';
-  const metalColor = metal.type === 'gold' ? '#D4A843' : '#C0C0C0';
+  const metalColor = metal.type === 'gold' ? '#C9A84C' : '#C0C0C0';
   const numAmount = parseFloat(amount) || 0;
   const estimatedGrams = numAmount > 0 ? numAmount / metal.currentPricePerGram : 0;
 
