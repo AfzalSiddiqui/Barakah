@@ -9,7 +9,7 @@ export const BarakahDarkTheme: FluxTheme = {
   textPrimary: '#F0F2F5',
   textSecondary: '#6B7B8D',
   success: '#00D4AA',
-  warning: '#D4A843',
+  warning: '#C9A84C',
   error: '#FF4757',
   border: 'rgba(255, 255, 255, 0.12)',
   divider: 'rgba(255, 255, 255, 0.08)',

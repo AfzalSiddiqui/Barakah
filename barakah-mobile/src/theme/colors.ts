@@ -4,7 +4,7 @@ export const colors = {
     surface: '#141922',
     card: '#1C2333',
     green: '#00D4AA',
-    gold: '#D4A843',
+    gold: '#C9A84C',
     accent: '#4F8CFF',
     red: '#FF4757',
     text: '#F0F2F5',
@@ -22,7 +22,7 @@ export const colors = {
   gradients: {
     card: ['#1C2333', '#141922'],
     green: ['#00D4AA', '#00B894'],
-    gold: ['#D4A843', '#B8922E'],
+    gold: ['#C9A84C', '#AD9137'],
     accent: ['#4F8CFF', '#3A6FD4'],
     premium: ['#1C2333', '#0A0E17'],
     glass: ['rgba(255, 255, 255, 0.08)', 'rgba(255, 255, 255, 0.02)'],

@@ -13,7 +13,7 @@ module.exports = {
           surface: "#141922",
           card: "#1C2333",
           green: "#00D4AA",
-          gold: "#D4A843",
+          gold: "#C9A84C",
           accent: "#4F8CFF",
           red: "#FF4757",
           text: "#F0F2F5",
