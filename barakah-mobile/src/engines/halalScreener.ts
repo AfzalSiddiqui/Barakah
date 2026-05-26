@@ -94,7 +94,7 @@ export function getStatusColor(status: HalalStatus): string {
   switch (status) {
     case 'halal': return '#00D4AA';
     case 'haram': return '#FF4757';
-    case 'doubtful': return '#D4A843';
+    case 'doubtful': return '#C9A84C';
   }
 }
 

@@ -202,7 +202,7 @@ export const mockMetalPlans: MetalInvestmentPlan[] = [
 export const sectorAllocation: Array<{ sector: string; sectorAr: string; percentage: number; color: string }> = [
   { sector: 'Energy', sectorAr: 'الطاقة', percentage: 28, color: '#00D4AA' },
   { sector: 'Banking', sectorAr: 'البنوك', percentage: 32, color: '#4A9EFF' },
-  { sector: 'Materials', sectorAr: 'المواد', percentage: 14, color: '#D4A843' },
+  { sector: 'Materials', sectorAr: 'المواد', percentage: 14, color: '#C9A84C' },
   { sector: 'Telecom', sectorAr: 'الاتصالات', percentage: 18, color: '#FF6B8A' },
   { sector: 'Precious Metals', sectorAr: 'المعادن الثمينة', percentage: 8, color: '#C0C0C0' },
 ];
