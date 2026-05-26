@@ -4,6 +4,7 @@ import { useFluxColors, FluxSpacing, FluxRadius, hexToRgba } from '@flux-ds/reac
 import { FluxText } from '@flux-ds/react-native-foundation';
 import { useTranslation } from 'react-i18next';
 import { Badge } from '../ui/Badge';
+import { colors as themeColors } from '../../theme/colors';
 import type { MetalHolding } from '../../engines/types';
 import { useRTL } from '../../hooks/useRTL';
 import { useInvestStore } from '../../store/investStore';
@@ -27,7 +28,14 @@ export function MetalCard({ metal }: MetalCardProps) {
   const metalColor = metal.type === 'gold' ? '#C9A84C' : '#C0C0C0';
 
   return (
-    <View className="bg-nb-surface rounded-xl p-3 mb-2">
+    <View
+      className="rounded-xl p-3 mb-2"
+      style={{
+        backgroundColor: themeColors.glass.bg,
+        borderWidth: 1,
+        borderColor: themeColors.glass.border,
+      }}
+    >
       <View className={`${flexRow} justify-between items-center`}>
         <View className={`${flexRow} items-center gap-2 flex-1`}>
           <FluxText textStyle="headline">{icon}</FluxText>

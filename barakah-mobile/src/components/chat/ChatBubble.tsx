@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useFluxColors } from '@flux-ds/react-native-ds';
 import { FluxText } from '@flux-ds/react-native-foundation';
+import { colors as themeColors } from '../../theme/colors';
 import type { ChatMessage } from '../../engines/types';
 
 interface ChatBubbleProps {
@@ -17,8 +18,17 @@ export function ChatBubble({ message, onActionPress }: ChatBubbleProps) {
     <View className={`mb-3 ${isUser ? 'items-end' : 'items-start'}`}>
       <View
         className={`max-w-[85%] rounded-2xl px-4 py-3 ${
-          isUser ? 'bg-nb-green rounded-br-sm' : 'bg-nb-card rounded-bl-sm'
+          isUser ? 'bg-nb-green rounded-br-sm' : 'rounded-bl-sm'
         }`}
+        style={
+          !isUser
+            ? {
+                backgroundColor: themeColors.glass.bg,
+                borderWidth: 1,
+                borderColor: themeColors.glass.border,
+              }
+            : undefined
+        }
       >
         <FluxText
           textStyle="body"
@@ -34,8 +44,15 @@ export function ChatBubble({ message, onActionPress }: ChatBubbleProps) {
             <TouchableOpacity
               key={action.id}
               onPress={() => onActionPress?.(action.payload)}
-              className="bg-nb-surface border border-nb-green/30 rounded-full px-3 py-1.5"
               activeOpacity={0.7}
+              style={{
+                backgroundColor: themeColors.glass.bgSubtle,
+                borderWidth: 1,
+                borderColor: 'rgba(0, 212, 170, 0.25)',
+                borderRadius: 9999,
+                paddingHorizontal: 12,
+                paddingVertical: 6,
+              }}
             >
               <FluxText textStyle="caption" color={colors.success} style={{ fontWeight: '600', fontSize: 10 }}>
                 {action.label}
