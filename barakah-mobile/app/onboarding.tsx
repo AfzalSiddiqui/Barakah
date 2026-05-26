@@ -27,7 +27,7 @@ const slides = [
     icon: '🔒',
     title: 'Your Privacy, Our Priority',
     subtitle: 'Bank-grade encryption with local-first processing. Your data never leaves your device.',
-    accentColor: '#D4A843',
+    accentColor: '#C9A84C',
   },
 ];
 

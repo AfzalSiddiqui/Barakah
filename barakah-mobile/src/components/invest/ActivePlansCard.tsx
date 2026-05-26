@@ -15,7 +15,7 @@ function PlanRow({ plan }: { plan: MetalInvestmentPlan }) {
   const cancelPlan = useInvestStore((s) => s.cancelPlan);
 
   const icon = plan.metalType === 'gold' ? '🥇' : '🥈';
-  const metalColor = plan.metalType === 'gold' ? '#D4A843' : '#C0C0C0';
+  const metalColor = plan.metalType === 'gold' ? '#C9A84C' : '#C0C0C0';
 
   const freqLabels: Record<MetalInvestFrequency, string> = {
     daily: t('invest.freqDaily'),
