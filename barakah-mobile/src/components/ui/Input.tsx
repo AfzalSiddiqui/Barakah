@@ -2,6 +2,7 @@ import React from 'react';
 import { TextInput, TextInputProps, View } from 'react-native';
 import { useFluxColors, FluxSpacing, FluxRadius, FluxBorder } from '@flux-ds/react-native-ds';
 import { FluxText } from '@flux-ds/react-native-foundation';
+import { colors as themeColors } from '../../theme/colors';
 
 interface InputProps extends TextInputProps {
   label?: string;
@@ -25,14 +26,14 @@ export function Input({ label, error, className, style, ...props }: InputProps) 
       <TextInput
         style={[
           {
-            backgroundColor: colors.surface,
+            backgroundColor: themeColors.glass.bg,
             color: colors.textPrimary,
             fontSize: 13,
             paddingHorizontal: FluxSpacing.sm,
             paddingVertical: 10,
             borderRadius: FluxRadius.md,
-            borderWidth: FluxBorder.thin,
-            borderColor: error ? colors.error : colors.border,
+            borderWidth: 1,
+            borderColor: error ? colors.error : themeColors.glass.border,
           },
           style,
         ]}

@@ -14,15 +14,15 @@ interface BadgeProps {
 export function Badge({ label, variant = 'neutral', className }: BadgeProps) {
   const colors = useFluxColors();
 
-  const variantColors: Record<BadgeVariant, { bg: string; text: string }> = {
-    success: { bg: hexToRgba(colors.success, 0.2), text: colors.success },
-    warning: { bg: hexToRgba(colors.warning, 0.2), text: colors.warning },
-    error: { bg: hexToRgba(colors.error, 0.2), text: colors.error },
-    info: { bg: hexToRgba(colors.accent, 0.2), text: colors.accent },
-    neutral: { bg: hexToRgba(colors.textSecondary, 0.2), text: colors.textSecondary },
+  const variantColors: Record<BadgeVariant, { bg: string; text: string; border: string }> = {
+    success: { bg: hexToRgba(colors.success, 0.12), text: colors.success, border: hexToRgba(colors.success, 0.25) },
+    warning: { bg: hexToRgba(colors.warning, 0.12), text: colors.warning, border: hexToRgba(colors.warning, 0.25) },
+    error: { bg: hexToRgba(colors.error, 0.12), text: colors.error, border: hexToRgba(colors.error, 0.25) },
+    info: { bg: hexToRgba(colors.accent, 0.12), text: colors.accent, border: hexToRgba(colors.accent, 0.25) },
+    neutral: { bg: 'rgba(255, 255, 255, 0.06)', text: colors.textSecondary, border: 'rgba(255, 255, 255, 0.12)' },
   };
 
-  const { bg, text } = variantColors[variant];
+  const { bg, text, border } = variantColors[variant];
 
   return (
     <View
@@ -32,6 +32,8 @@ export function Badge({ label, variant = 'neutral', className }: BadgeProps) {
         paddingHorizontal: FluxSpacing.sm,
         paddingVertical: FluxSpacing.xxs,
         borderRadius: FluxRadius.full,
+        borderWidth: 1,
+        borderColor: border,
       }}
     >
       <FluxText

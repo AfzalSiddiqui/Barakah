@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity, TouchableOpacityProps, ActivityIndicator } from 'react-native';
 import { useFluxColors, FluxSpacing, FluxRadius, FluxOpacity } from '@flux-ds/react-native-ds';
 import { FluxText } from '@flux-ds/react-native-foundation';
+import { colors as themeColors } from '../../theme/colors';
 
 type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
 type ButtonSize = 'sm' | 'md' | 'lg';
@@ -28,16 +29,10 @@ export function Button({
   icon,
   disabled,
   className,
+  style,
   ...props
 }: ButtonProps) {
   const colors = useFluxColors();
-
-  const variantBgClasses: Record<ButtonVariant, string> = {
-    primary: 'bg-nb-green',
-    secondary: 'bg-nb-card',
-    outline: 'border border-nb-green bg-transparent',
-    ghost: 'bg-transparent',
-  };
 
   const variantTextColor: Record<ButtonVariant, string> = {
     primary: colors.onPrimary,
@@ -46,11 +41,33 @@ export function Button({
     ghost: colors.primary,
   };
 
+  const getVariantStyle = () => {
+    switch (variant) {
+      case 'primary':
+        return { backgroundColor: '#00D4AA' };
+      case 'secondary':
+        return {
+          backgroundColor: themeColors.glass.bg,
+          borderWidth: 1,
+          borderColor: themeColors.glass.border,
+        };
+      case 'outline':
+        return {
+          backgroundColor: 'transparent',
+          borderWidth: 1,
+          borderColor: 'rgba(0, 212, 170, 0.3)',
+        };
+      case 'ghost':
+        return { backgroundColor: 'transparent' };
+    }
+  };
+
   return (
     <TouchableOpacity
-      className={`flex-row items-center justify-center ${variantBgClasses[variant]} ${sizeClasses[size]} ${
+      className={`flex-row items-center justify-center ${sizeClasses[size]} ${
         disabled ? `opacity-${Math.round(FluxOpacity.disabled * 100)}` : ''
       } ${className ?? ''}`}
+      style={[getVariantStyle(), style]}
       disabled={disabled || loading}
       activeOpacity={0.7}
       {...props}
