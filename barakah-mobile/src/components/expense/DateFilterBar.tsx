@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Modal, TextInput } from 'react-native';
 import { useFluxColors, hexToRgba } from '@flux-ds/react-native-ds';
 import { FluxText } from '@flux-ds/react-native-foundation';
 import { Card } from '../ui/Card';
+import { colors as themeColors } from '../../theme/colors';
 import { useTranslation } from 'react-i18next';
 import type { DateFilter, DateFilterMode } from '../../store/expenseStore';
 
@@ -73,7 +74,9 @@ export function DateFilterBar({ filter, onFilterChange }: DateFilterBarProps) {
               borderRadius: 16,
               backgroundColor: filter.mode === mode.key
                 ? colors.primary
-                : hexToRgba(colors.textSecondary, 0.15),
+                : themeColors.glass.bg,
+              borderWidth: filter.mode === mode.key ? 0 : 1,
+              borderColor: themeColors.glass.border,
             }}
           >
             <FluxText
@@ -103,7 +106,9 @@ export function DateFilterBar({ filter, onFilterChange }: DateFilterBarProps) {
                   borderRadius: 12,
                   backgroundColor: isActive
                     ? colors.primary
-                    : hexToRgba(colors.textSecondary, 0.1),
+                    : themeColors.glass.bg,
+                  borderWidth: isActive ? 0 : 1,
+                  borderColor: themeColors.glass.border,
                 }}
               >
                 <FluxText
@@ -146,7 +151,8 @@ export function DateFilterBar({ filter, onFilterChange }: DateFilterBarProps) {
               placeholderTextColor={hexToRgba(colors.textSecondary, 0.5)}
               style={{
                 borderWidth: 1,
-                borderColor: hexToRgba(colors.textSecondary, 0.3),
+                borderColor: themeColors.glass.border,
+                backgroundColor: themeColors.glass.bg,
                 borderRadius: 8,
                 padding: 10,
                 color: colors.textPrimary,
@@ -165,7 +171,8 @@ export function DateFilterBar({ filter, onFilterChange }: DateFilterBarProps) {
               placeholderTextColor={hexToRgba(colors.textSecondary, 0.5)}
               style={{
                 borderWidth: 1,
-                borderColor: hexToRgba(colors.textSecondary, 0.3),
+                borderColor: themeColors.glass.border,
+                backgroundColor: themeColors.glass.bg,
                 borderRadius: 8,
                 padding: 10,
                 color: colors.textPrimary,
