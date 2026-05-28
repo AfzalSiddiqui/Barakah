@@ -22,7 +22,10 @@ export function WatchlistItem({ item }: WatchlistItemProps) {
   } as const;
 
   return (
-    <View className={`${flexRow} justify-between items-center py-2.5 border-b border-nb-muted/10`}>
+    <View
+      className={`${flexRow} justify-between items-center py-2.5`}
+      style={{ borderBottomWidth: 1, borderBottomColor: 'rgba(255, 255, 255, 0.06)' }}
+    >
       <View className={`${flexRow} items-center gap-2`}>
         <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: statusDotColor[item.status] }} />
         <View>

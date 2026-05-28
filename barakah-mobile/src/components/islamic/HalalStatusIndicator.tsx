@@ -30,7 +30,14 @@ export function HalalStatusIndicator({
   const config = statusConfig[status];
 
   return (
-    <View className={`bg-nb-surface rounded-xl p-3 ${className ?? ''}`}>
+    <View
+      className={`rounded-xl p-3 ${className ?? ''}`}
+      style={{
+        backgroundColor: 'rgba(255, 255, 255, 0.06)',
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.12)',
+      }}
+    >
       <View className="flex-row justify-between items-center">
         <View className="flex-1">
           <FluxText textStyle="body" color={colors.textPrimary} style={{ fontWeight: '600', fontSize: 14 }}>
@@ -40,7 +47,7 @@ export function HalalStatusIndicator({
             {ticker}
           </FluxText>
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: config.bg, borderRadius: 9999, paddingHorizontal: 12, paddingVertical: 4 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: config.bg, borderRadius: 9999, paddingHorizontal: 12, paddingVertical: 4, borderWidth: 1, borderColor: hexToRgba(config.color, 0.25) }}>
           <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: config.color, marginRight: 6 }} />
           <FluxText textStyle="caption" color={config.color} style={{ fontWeight: '600', fontSize: 10 }}>
             {config.label}

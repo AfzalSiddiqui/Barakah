@@ -29,7 +29,7 @@ export function ZakatProgressRing({
         progress={progress}
         size={size}
         strokeWidth={10}
-        trackColor={colors.secondary}
+        trackColor="rgba(255, 255, 255, 0.08)"
         progressColor={isAboveNisab ? colors.warning : colors.textSecondary}
       >
         <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>

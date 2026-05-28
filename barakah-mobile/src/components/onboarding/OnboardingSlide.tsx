@@ -21,7 +21,11 @@ export function OnboardingSlide({ icon, title, subtitle, accentColor }: Onboardi
       <Animated.View
         entering={FadeInUp.duration(600)}
         className="w-32 h-32 rounded-full items-center justify-center mb-8"
-        style={{ backgroundColor: `${accentColor}20` }}
+        style={{
+          backgroundColor: `${accentColor}15`,
+          borderWidth: 1,
+          borderColor: `${accentColor}30`,
+        }}
       >
         <FluxText textStyle="largeTitle" style={{ fontSize: 56 }}>
           {icon}

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useFluxColors, hexToRgba } from '@flux-ds/react-native-ds';
 import { FluxText } from '@flux-ds/react-native-foundation';
+import { colors as themeColors } from '../../theme/colors';
 import type { InvestmentHolding } from '../../engines/types';
 import { useRTL } from '../../hooks/useRTL';
 import { useTranslation } from 'react-i18next';
@@ -32,7 +33,12 @@ export function HoldingRow({ holding, isExpanded, onToggle }: HoldingRowProps) {
     <TouchableOpacity
       onPress={onToggle}
       activeOpacity={0.7}
-      className="bg-nb-surface rounded-xl p-3 mb-2"
+      className="rounded-xl p-3 mb-2"
+      style={{
+        backgroundColor: themeColors.glass.bg,
+        borderWidth: 1,
+        borderColor: themeColors.glass.border,
+      }}
     >
       <View className={`${flexRow} justify-between items-center`}>
         <View className="flex-1">
@@ -71,7 +77,7 @@ export function HoldingRow({ holding, isExpanded, onToggle }: HoldingRowProps) {
       </View>
 
       {isExpanded && (
-        <View className="mt-3 pt-3 border-t border-nb-muted/20">
+        <View className="mt-3 pt-3" style={{ borderTopWidth: 1, borderTopColor: themeColors.glass.border }}>
           <FluxText textStyle="caption" color={colors.accent} style={{ fontWeight: '600', marginBottom: 8 }}>
             {t('invest.aaoifiScreening')}
           </FluxText>

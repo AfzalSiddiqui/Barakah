@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Modal, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { BlurView } from 'expo-blur';
 import { useFluxColors, FluxSpacing, FluxRadius, hexToRgba } from '@flux-ds/react-native-ds';
 import { FluxText } from '@flux-ds/react-native-foundation';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +9,7 @@ import { useRTL } from '../../hooks/useRTL';
 import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
+import { colors as themeColors } from '../../theme/colors';
 import type { MetalInvestFrequency } from '../../engines/types';
 
 const FREQUENCIES: MetalInvestFrequency[] = ['daily', 'monthly', 'one_time'];
@@ -79,10 +81,20 @@ export function MetalInvestModal() {
           <TouchableOpacity activeOpacity={1} onPress={(e) => e.stopPropagation()}>
             <View
               style={{
-                backgroundColor: colors.secondary,
                 borderTopLeftRadius: 24,
                 borderTopRightRadius: 24,
+                overflow: 'hidden',
+                borderWidth: 1,
+                borderBottomWidth: 0,
+                borderColor: themeColors.glass.border,
+              }}
+            >
+            <BlurView
+              intensity={40}
+              tint="dark"
+              style={{
                 paddingBottom: Platform.OS === 'ios' ? 34 : 20,
+                backgroundColor: Platform.OS === 'android' ? '#0A0E17' : undefined,
               }}
             >
               {showSuccess ? (
@@ -159,10 +171,10 @@ export function MetalInvestModal() {
                             className="flex-1 items-center py-3 rounded-xl"
                             style={{
                               backgroundColor: isSelected
-                                ? hexToRgba(metalColor, 0.2)
-                                : colors.surface,
+                                ? hexToRgba(metalColor, 0.15)
+                                : themeColors.glass.bg,
                               borderWidth: isSelected ? 1.5 : 1,
-                              borderColor: isSelected ? metalColor : colors.border,
+                              borderColor: isSelected ? metalColor : themeColors.glass.border,
                               borderRadius: FluxRadius.lg,
                             }}
                           >
@@ -298,6 +310,7 @@ export function MetalInvestModal() {
                   </View>
                 </ScrollView>
               )}
+            </BlurView>
             </View>
           </TouchableOpacity>
         </TouchableOpacity>

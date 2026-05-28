@@ -32,7 +32,7 @@ export function NisabThresholdBar({ netWealth, nisabThreshold, className }: Nisa
       <FluxProgressBar
         progress={progress}
         height={12}
-        trackColor={colors.surface}
+        trackColor="rgba(255, 255, 255, 0.06)"
         progressColor={isAboveNisab ? colors.warning : colors.textSecondary}
       />
       <View className="flex-row justify-between mt-1">

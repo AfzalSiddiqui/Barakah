@@ -25,11 +25,11 @@ export function ShariaComplianceBadge({
 }: ShariaComplianceBadgeProps) {
   const colors = useFluxColors();
 
-  const statusConfig: Record<ComplianceStatus, { color: string; bg: string; label: string; icon: string }> = {
-    compliant: { color: colors.success, bg: hexToRgba(colors.success, 0.2), label: 'Sharia Compliant', icon: '✓' },
-    non_compliant: { color: colors.error, bg: hexToRgba(colors.error, 0.2), label: 'Non-Compliant', icon: '✗' },
-    review_required: { color: colors.warning, bg: hexToRgba(colors.warning, 0.2), label: 'Review Required', icon: '!' },
-    pending: { color: colors.textSecondary, bg: hexToRgba(colors.textSecondary, 0.2), label: 'Pending Review', icon: '…' },
+  const statusConfig: Record<ComplianceStatus, { color: string; bg: string; border: string; label: string; icon: string }> = {
+    compliant: { color: colors.success, bg: hexToRgba(colors.success, 0.10), border: hexToRgba(colors.success, 0.25), label: 'Sharia Compliant', icon: '✓' },
+    non_compliant: { color: colors.error, bg: hexToRgba(colors.error, 0.10), border: hexToRgba(colors.error, 0.25), label: 'Non-Compliant', icon: '✗' },
+    review_required: { color: colors.warning, bg: hexToRgba(colors.warning, 0.10), border: hexToRgba(colors.warning, 0.25), label: 'Review Required', icon: '!' },
+    pending: { color: colors.textSecondary, bg: 'rgba(255, 255, 255, 0.06)', border: 'rgba(255, 255, 255, 0.12)', label: 'Pending Review', icon: '…' },
   };
 
   const config = statusConfig[status];
@@ -39,7 +39,7 @@ export function ShariaComplianceBadge({
   return (
     <View
       className={`flex-row items-center rounded-full ${sizeClasses[size]} ${className ?? ''}`}
-      style={{ backgroundColor: config.bg }}
+      style={{ backgroundColor: config.bg, borderWidth: 1, borderColor: config.border }}
     >
       <FluxText textStyle="caption" color={config.color} style={{ fontSize, marginRight: 4, fontWeight: '600' }}>
         {config.icon}
