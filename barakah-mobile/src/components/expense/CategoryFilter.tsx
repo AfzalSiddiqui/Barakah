@@ -3,6 +3,7 @@ import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { useFluxColors, hexToRgba } from '@flux-ds/react-native-ds';
 import { FluxText } from '@flux-ds/react-native-foundation';
 import { CATEGORY_META } from '../../engines/smsParser';
+import { colors as themeColors } from '../../theme/colors';
 import type { ExpenseCategory } from '../../engines/types';
 import { useTranslation } from 'react-i18next';
 
@@ -35,7 +36,9 @@ export function CategoryFilter({ selected, onSelect }: CategoryFilterProps) {
           borderRadius: 16,
           backgroundColor: selected === null
             ? colors.primary
-            : hexToRgba(colors.textSecondary, 0.15),
+            : themeColors.glass.bg,
+          borderWidth: selected === null ? 0 : 1,
+          borderColor: themeColors.glass.border,
         }}
       >
         <FluxText
@@ -60,7 +63,9 @@ export function CategoryFilter({ selected, onSelect }: CategoryFilterProps) {
               borderRadius: 16,
               backgroundColor: isActive
                 ? meta.color
-                : hexToRgba(colors.textSecondary, 0.15),
+                : themeColors.glass.bg,
+              borderWidth: isActive ? 0 : 1,
+              borderColor: themeColors.glass.border,
               flexDirection: 'row',
               alignItems: 'center',
               gap: 4,
