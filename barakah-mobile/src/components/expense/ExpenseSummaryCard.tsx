@@ -59,7 +59,7 @@ export function ExpenseSummaryCard({ summary }: ExpenseSummaryCardProps) {
       {/* Transaction count */}
       <View className="mt-3 items-center">
         <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>
-          {summary.transactionCount} {t('expenses.transactions')}
+          {`${summary.transactionCount} ${t('expenses.transactions')}`}
         </FluxText>
       </View>
     </Card>
