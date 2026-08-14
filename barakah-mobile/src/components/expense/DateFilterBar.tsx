@@ -128,7 +128,7 @@ export function DateFilterBar({ filter, onFilterChange }: DateFilterBarProps) {
       {filter.mode === 'custom' && filter.startDate && filter.endDate && (
         <TouchableOpacity onPress={() => setShowCustomModal(true)} className="mt-2">
           <FluxText textStyle="caption" color={colors.primary} style={{ fontSize: 11 }}>
-            {filter.startDate} → {filter.endDate}
+            {`${filter.startDate} → ${filter.endDate}`}
           </FluxText>
         </TouchableOpacity>
       )}
@@ -142,7 +142,7 @@ export function DateFilterBar({ filter, onFilterChange }: DateFilterBarProps) {
             </FluxText>
 
             <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10, marginBottom: 4 }}>
-              {t('expenses.startDate')} (DD/MM/YYYY)
+              {`${t('expenses.startDate')} (DD/MM/YYYY)`}
             </FluxText>
             <TextInput
               value={customStart}
@@ -162,7 +162,7 @@ export function DateFilterBar({ filter, onFilterChange }: DateFilterBarProps) {
             />
 
             <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10, marginBottom: 4 }}>
-              {t('expenses.endDate')} (DD/MM/YYYY)
+              {`${t('expenses.endDate')} (DD/MM/YYYY)`}
             </FluxText>
             <TextInput
               value={customEnd}

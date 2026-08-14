@@ -40,7 +40,7 @@ export function ExpenseItem({ expense }: ExpenseItemProps) {
             ·
           </FluxText>
           <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10, textTransform: 'capitalize' }}>
-            {expense.cardType} *{expense.cardLastFour}
+            {`${expense.cardType} *${expense.cardLastFour}`}
           </FluxText>
         </View>
       </View>
