@@ -42,7 +42,7 @@ export function CategoryBreakdown({ breakdown }: CategoryBreakdownProps) {
                   {formatCurrency(item.total)}
                 </FluxText>
                 <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10, width: 40, textAlign: 'right' }}>
-                  {item.percentage.toFixed(1)}%
+                  {`${item.percentage.toFixed(1)}%`}
                 </FluxText>
               </View>
             </View>

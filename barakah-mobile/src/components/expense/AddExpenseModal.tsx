@@ -143,7 +143,7 @@ export function AddExpenseModal({ visible, onClose, onAdd }: AddExpenseModalProp
 
               {/* Amount */}
               <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10, marginBottom: 4 }}>
-                {t('expenses.amount')} (AED)
+                {`${t('expenses.amount')} (AED)`}
               </FluxText>
               <TextInput
                 value={amount}
@@ -168,7 +168,7 @@ export function AddExpenseModal({ visible, onClose, onAdd }: AddExpenseModalProp
 
               {/* Date */}
               <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10, marginBottom: 4 }}>
-                {t('expenses.date')} (DD/MM/YYYY)
+                {`${t('expenses.date')} (DD/MM/YYYY)`}
               </FluxText>
               <TextInput
                 value={date}
