@@ -14,7 +14,7 @@
         "./node_modules/@flux-ds/react-native-ds/src/index.ts"
       ],
       "@flux-ds/react-native-foundation": [
-        "./node_modules/@flux-ds/react-native-foundation/src/index.ts"
+        "./src/types/flux-foundation.d.ts"
       ],
       "@flux-ds/react-native-assets": [
         "./node_modules/@flux-ds/react-native-assets/src/index.ts"
