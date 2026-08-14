@@ -187,7 +187,7 @@ export default function DashboardScreen() {
                 {t('expenses.recentExpenses')}
               </Typography>
               <FluxText textStyle="caption" color={colors.textSecondary} style={{ fontSize: 10 }}>
-                {filteredExpenses.length} {t('expenses.transactions')}
+                {`${filteredExpenses.length} ${t('expenses.transactions')}`}
               </FluxText>
             </View>
             <Card>
