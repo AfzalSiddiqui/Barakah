@@ -72,4 +72,21 @@ export function formatCurrency(amount: number, currency = 'AED'): string {
   })}`;
 }
 
+export function getZakatBreakdown(result: ZakatResult): string[] {
+  const lines: string[] = [
+    `Total Assets: ${formatCurrency(result.totalAssets)}`,
+    `Total Liabilities: ${formatCurrency(result.totalLiabilities)}`,
+    `Net Zakatable: ${formatCurrency(result.netZakatable)}`,
+    `Nisab Threshold (${result.madhab}): ${formatCurrency(result.nisabThreshold)}`,
+  ];
+
+  if (result.isAboveNisab) {
+    lines.push(`Zakat Due (2.5%): ${formatCurrency(result.zakatDue)}`);
+  } else {
+    lines.push('Assets are below the Nisab threshold — no Zakat due.');
+  }
+
+  return lines;
+}
+
 export { NISAB_GOLD_AED, NISAB_SILVER_AED, ZAKAT_RATE };

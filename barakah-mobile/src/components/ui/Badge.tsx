@@ -4,15 +4,24 @@ import { useFluxColors, FluxSpacing, FluxRadius, hexToRgba } from '@flux-ds/reac
 import { FluxText } from '@flux-ds/react-native-foundation';
 
 type BadgeVariant = 'success' | 'warning' | 'error' | 'info' | 'neutral';
+type BadgeSize = 'sm' | 'md' | 'lg';
 
 interface BadgeProps {
   label: string;
   variant?: BadgeVariant;
+  size?: BadgeSize;
   className?: string;
 }
 
-export function Badge({ label, variant = 'neutral', className }: BadgeProps) {
+const BADGE_SIZES: Record<BadgeSize, { paddingH: number; paddingV: number; fontSize: number }> = {
+  sm: { paddingH: FluxSpacing.xs, paddingV: 2, fontSize: 9 },
+  md: { paddingH: FluxSpacing.sm, paddingV: FluxSpacing.xxs, fontSize: 10 },
+  lg: { paddingH: FluxSpacing.md, paddingV: FluxSpacing.xs, fontSize: 12 },
+};
+
+export function Badge({ label, variant = 'neutral', size = 'md', className }: BadgeProps) {
   const colors = useFluxColors();
+  const sizeStyle = BADGE_SIZES[size];
 
   const variantColors: Record<BadgeVariant, { bg: string; text: string; border: string }> = {
     success: { bg: hexToRgba(colors.success, 0.12), text: colors.success, border: hexToRgba(colors.success, 0.25) },
@@ -29,8 +38,8 @@ export function Badge({ label, variant = 'neutral', className }: BadgeProps) {
       className={`self-start ${className ?? ''}`}
       style={{
         backgroundColor: bg,
-        paddingHorizontal: FluxSpacing.sm,
-        paddingVertical: FluxSpacing.xxs,
+        paddingHorizontal: sizeStyle.paddingH,
+        paddingVertical: sizeStyle.paddingV,
         borderRadius: FluxRadius.full,
         borderWidth: 1,
         borderColor: border,
@@ -39,7 +48,7 @@ export function Badge({ label, variant = 'neutral', className }: BadgeProps) {
       <FluxText
         textStyle="caption"
         color={text}
-        style={{ fontWeight: '600', fontSize: 10 }}
+        style={{ fontWeight: '600', fontSize: sizeStyle.fontSize }}
       >
         {label}
       </FluxText>
