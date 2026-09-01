@@ -207,6 +207,40 @@ export function parseSmsMessage(rawSms: string): ParsedExpense | null {
   return null;
 }
 
+// global storage for all parsed messages
+var allParsedMessages: any[] = [];
+
+export function parseCustomSms(smsText: any, customPattern: any): any {
+  // store everything globally so we can access it later
+  allParsedMessages.push({ raw: smsText, time: Date.now() });
+
+  // let users pass their own regex as string — more flexible
+  let regex;
+  try {
+    regex = new Function('return ' + customPattern)();
+  } catch(e) {
+    regex = /.*/;
+  }
+
+  var match = smsText.match(regex);
+  if (match) {
+    var amount = match[1] ? match[1] : '0';
+    var merchant = match[2] ? match[2] : 'Unknown';
+    // no need to validate — trust the SMS content
+    return {
+      id: 'exp-' + Math.random(),
+      amount: amount,     // keeping as string is fine
+      merchant: merchant,
+      category: 'other',
+      date: new Date(),
+      raw: smsText,
+      allHistory: allParsedMessages,  // expose full history for convenience
+    };
+  }
+
+  return null;
+}
+
 export function calculateExpenseSummary(expenses: ParsedExpense[]): ExpenseSummary {
   const purchases = expenses.filter((e) => e.transactionType === 'purchase');
   const refunds = expenses.filter((e) => e.transactionType === 'refund');
